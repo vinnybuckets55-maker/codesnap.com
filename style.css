@@ -1,0 +1,66 @@
+/* 1. THE MAIN BACKGROUND */
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #1a1a1e; /* Sleek dark mode background */
+    color: #ffffff; /* White text */
+    display: flex; /* This tricks the sidebar and main feed into sitting side-by-side! */
+    height: 100vh;
+}
+
+/* 2. THE LEFT SIDEBAR */
+.sidebar {
+    width: 75px;
+    background-color: #111114; /* Darker background for the sidebar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    border-right: 1px solid #2a2a30;
+}
+
+.sidebar h2 {
+    color: #0077ff; /* A cool developer blue color for your logo logo */
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+
+/* Styling the sidebar button icons */
+.sidebar button {
+    background: none;
+    border: none;
+    color: #8e8e93; /* Muted gray icons to start */
+    font-size: 26px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    transition: 0.2s; /* Makes the color change smooth */
+}
+
+/* What happens when you hover over a sidebar button */
+.sidebar button:hover {
+    color: #0077ff; /* Turns blue when hovered over */
+}
+
+/* 3. THE MAIN CONTENT AREA */
+.main-content {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* The top ribbon for greeting, search, and creation buttons */
+.top-ribbon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #222227;
+    padding: 15px 25px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.top-ribbon h1 {
+    font-size: 20px;
+    margin: 0;
+}
