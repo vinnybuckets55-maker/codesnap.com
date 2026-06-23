@@ -153,3 +153,52 @@ body {
     background-color: #0077ff;
     border-color: #0077ff;
 }
+/* 5. TOP RIBBON POLISHING & INTERACTIONS */
+.ribbon-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Style the top action buttons */
+.ribbon-actions button {
+    background-color: #1a1a1e;
+    border: 1px solid #2a2a30;
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+/* Hover glow effect for the header buttons */
+.ribbon-actions button:hover {
+    background-color: #0077ff;
+    border-color: #0077ff;
+}
+
+/* Make the + New Post button stand out a little bit extra */
+.ribbon-actions .btn-primary {
+    border-color: #0077ff;
+}
+
+/* Style the search bar input box */
+.ribbon-actions input[type="text"] {
+    background-color: #1a1a1e;
+    border: 1px solid #2a2a30;
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    width: 160px;
+    transition: 0.3s ease-in-out; /* Smooth stretching motion */
+}
+
+/* Cool UI Trick: The search bar widens automatically when you click into it! */
+.ribbon-actions input[type="text"]:focus {
+    border-color: #0077ff;
+    width: 240px;
+}
