@@ -20,26 +20,25 @@
     <div class="main-content">
         <div class="top-ribbon">
             <h1>Good Morning, Vincent!</h1>
-            <button>+ New Post</button>
-            <button>🎥 New Reel</button>
-            <input type="text" placeholder="Search tags...">
+            <div class="ribbon-actions">
+                <button class="btn-primary">+ New Post</button>
+                <button class="btn-secondary">🎥 New Reel</button>
+                <input type="text" placeholder="Search tags...">
+            </div>
         </div>
 
-<div class="feed-posts">
+        <div class="feed-posts">
             
             <div class="post-card">
-                
                 <div class="post-header">
                     <button class="profile-link" title="View Profile">
                         <i class='bx bx-user-circle'></i>
                     </button>
                     <h3 class="post-title">Help c++</h3>
                 </div>
-
                 <div class="post-body">
                     <p>I am trying to make a loop inside my main function but it keeps crashing my program after 3 seconds. Anyone know why it's breaking?</p>
                 </div>
-
                 <div class="post-footer">
                     <div class="tags-container">
                         <span class="tag">c++</span>
@@ -50,7 +49,28 @@
                         <button title="Reply/Debug"><i class='bx bx-code-alt'></i></button>
                     </div>
                 </div>
+            </div>
 
+            <div class="post-card">
+                <div class="post-header">
+                    <button class="profile-link" title="View Profile">
+                        <i class='bx bx-user-circle'></i>
+                    </button>
+                    <h3 class="post-title">Python IndentationError?</h3>
+                </div>
+                <div class="post-body">
+                    <p>I keep getting an "IndentationError: unexpected indent" on line 14. I checked and everything looks perfectly aligned. Is it possible that mixing tabs and spaces messes up python?</p>
+                </div>
+                <div class="post-footer">
+                    <div class="tags-container">
+                        <span class="tag">python</span>
+                        <span class="tag">bugs</span>
+                    </div>
+                    <div class="post-actions">
+                        <button title="Upvote"><i class='bx bx-upvote'></i></button>
+                        <button title="Reply/Debug"><i class='bx bx-code-alt'></i></button>
+                    </div>
+                </div>
             </div>
 
         </div>
