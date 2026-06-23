@@ -64,3 +64,92 @@ body {
     font-size: 20px;
     margin: 0;
 }
+/* 4. THE CODE-SNAP POST BUBBLES */
+.feed-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 650px; /* Keeps the posts from getting stretched too wide on PC */
+}
+
+.post-card {
+    background-color: #222227; /* Matches the top ribbon */
+    border: 1px solid #2a2a30;
+    border-radius: 20px; /* Nice rounded bubble corners from your drawing */
+    padding: 20px;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+/* The profile icon button in the top left */
+.profile-link {
+    background: none;
+    border: none;
+    color: #0077ff;
+    font-size: 32px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.post-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.post-body p {
+    color: #e4e4e6;
+    line-height: 1.5;
+    margin: 0 0 15px 0;
+}
+
+/* The Footer: Tags on left, Buttons on right */
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tags-container {
+    display: flex;
+    gap: 8px;
+}
+
+/* Styling those oval tags from Picture 1 */
+.tag {
+    background-color: #1a1a1e;
+    border: 1px solid #0077ff;
+    color: #0077ff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Upvote and Reply buttons on the bottom right */
+.post-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.post-actions button {
+    background: #1a1a1e;
+    border: 1px solid #2a2a30;
+    color: #8e8e93;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.post-actions button:hover {
+    color: #ffffff;
+    background-color: #0077ff;
+    border-color: #0077ff;
+}
