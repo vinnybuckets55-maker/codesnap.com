@@ -18,7 +18,6 @@ function setupUpvoteButton(button) {
         countSpan.textContent = currentCount;
     });
 }
-
 // --- 2. LOGIC FOR THE HOMEPAGE (index.html) ---
 const mainFeed = document.getElementById('mainFeed');
 if (mainFeed) {
