@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CodeSnap Posts</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <div class="sidebar">
+        <a href="index.html" style="text-decoration: none;"><h2>CS 🚀</h2></a> 
+        <p><a href="index.html"><button title="Home"><i class='bx bx-home-alt'></i></button></a></p>
+        <p><button title="DMs"><i class='bx bx-message-rounded-detail'></i></button></p>
+        <p><button title="Forums"><i class='bx bx-git-repo-forked'></i></button></p>
+        <p><a href="reels.html"><button title="Reels"><i class='bx bx-video'></i></button></a></p>
+        <p><button title="Profile"><i class='bx bx-user-circle'></i></button></p>
+    </div>
+
+    <div class="main-content">
+        <div class="top-ribbon">
+            <h1>Create a CodeSnap 📝</h1>
+            <a href="index.html" style="text-decoration: none;">
+                <button class="btn-primary" style="width: auto; height: 40px; border-radius: 20px; padding: 0 15px; font-size: 14px;">
+                    Cancel
+                </button>
+            </a>
+        </div>
+
+        <div class="feed-posts">
+            <div class="post-card" style="display: flex; flex-direction: column; gap: 15px;">
+                <h3 style="margin: 0; color: #0077ff;">What's the bug?</h3>
+                <input type="text" id="postTitle" placeholder="Title (e.g., C++ Vector Out of Bounds Error)" style="background-color: #1a1a1e; border: 1px solid #2a2a30; color: #ffffff; padding: 12px; border-radius: 8px; outline: none; font-size: 15px;">
+                <textarea id="postBody" placeholder="Paste your code snippet or describe what's breaking..." style="background-color: #1a1a1e; border: 1px solid #2a2a30; color: #ffffff; padding: 12px; border-radius: 8px; outline: none; font-size: 15px; height: 180px; resize: none; font-family: sans-serif;"></textarea>
+                <button class="submit-post-btn" style="background-color: #0077ff; color: #ffffff; border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer; transition: 0.2s;">
+                    Snap It Live 🚀
+                </button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
