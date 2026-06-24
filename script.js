@@ -66,33 +66,60 @@ if (mainFeed) {
         setupUpvoteButton(newUpvoteBtn);
     });
 
-    // --- NEW: SEARCH ELEMENT FILTER LOGIC ---
+    // --- SEARCH BAR TOKEN CHIPS LOGIC ---
+    let activeSearchTags = []; // Holds all currently active filter tags
     const searchInput = document.querySelector('.top-ribbon input[type="text"]');
-    
-    if (searchInput) {
+    const searchTagsList = document.getElementById('searchTagsList');
+
+    // Central filtering execution function
+    function filterFeedPosts() {
+        const postCards = mainFeed.querySelectorAll('.post-card');
+        
+        postCards.forEach(card => {
+            // Get all tags pinned on this specific post
+            const postTags = Array.from(card.querySelectorAll('.tag')).map(t => t.textContent.trim().toLowerCase());
+            
+            // Check if every single active search filter matches something on this post
+            const matchesAllFilters = activeSearchTags.every(filterTag => postTags.includes(filterTag));
+
+            if (activeSearchTags.length === 0 || matchesAllFilters) {
+                card.style.display = 'block'; // Match found, show post
+            } else {
+                card.style.display = 'none';  // Missing a tag, hide post
+            }
+        });
+    }
+
+    if (searchInput && searchTagsList) {
         searchInput.addEventListener('keydown', (event) => {
-            // Check if the user hit the Enter key
             if (event.key === 'Enter') {
-                // Grab what they typed, make it lowercase, and split multiple words by spaces/commas
-                const queryText = searchInput.value.trim().toLowerCase();
-                const searchTerms = queryText.split(/[\s,]+/).filter(term => term !== "");
+                const tagText = searchInput.value.trim().toLowerCase();
 
-                // Grab all post cards currently sitting in the feed
-                const postCards = mainFeed.querySelectorAll('.post-card');
+                // Prevent blank or duplicate filter tags
+                if (tagText !== "" && !activeSearchTags.includes(tagText)) {
+                    activeSearchTags.push(tagText);
 
-                postCards.forEach(card => {
-                    // Extract all the tag text strings inside this specific post card
-                    const postTags = Array.from(card.querySelectorAll('.tag')).map(t => t.textContent.trim().toLowerCase());
+                    // Create a clickable tag bubble chip under the search bar
+                    const searchChip = document.createElement('span');
+                    searchChip.className = 'tag';
+                    searchChip.style.cursor = 'pointer';
+                    searchChip.title = 'Click to remove filter';
+                    // Adds a little 'x' icon next to the word
+                    searchChip.innerHTML = `${tagText} <i class='bx bx-x' style='margin-left: 4px; vertical-align: middle; font-size: 11px;'></i>`;
 
-                    // Check if EVERY SINGLE term searched matches a tag inside this post
-                    const matchesAllTerms = searchTerms.every(term => postTags.includes(term));
+                    // If a user clicks the bubble, delete it and recalculate search feed
+                    searchChip.addEventListener('click', () => {
+                        activeSearchTags = activeSearchTags.filter(t => t !== tagText);
+                        searchChip.remove();
+                        filterFeedPosts();
+                    });
 
-                    if (searchTerms.length === 0 || matchesAllTerms) {
-                        card.style.display = 'block'; // Show it!
-                    } else {
-                        card.style.display = 'none';  // Hide it!
-                    }
-                });
+                    searchTagsList.appendChild(searchChip);
+                    filterFeedPosts();
+                }
+                
+                // Clear the textbox completely so they can type another tag immediately
+                searchInput.value = "";
             }
         });
     }
