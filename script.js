@@ -22,15 +22,22 @@ function setupUpvoteButton(button) {
 // --- 2. LOGIC FOR THE HOMEPAGE (index.html) ---
 const mainFeed = document.getElementById('mainFeed');
 if (mainFeed) {
-    // Activate upvotes on default posts
     const existingButtons = mainFeed.querySelectorAll('.upvote-btn');
     existingButtons.forEach(btn => setupUpvoteButton(btn));
 
-    // Pull custom posts from memory
     const savedPosts = JSON.parse(localStorage.getItem('codesnap_local_db')) || [];
 
-    // Prepend saved posts to the feed
     savedPosts.forEach(post => {
+        // Build the tags HTML dynamically based on whatever the user typed!
+        let tagsHTML = '';
+        if (post.tags && post.tags.length > 0) {
+            post.tags.forEach(singleTag => {
+                tagsHTML += `<span class="tag">${singleTag}</span>`;
+            });
+        } else {
+            tagsHTML = `<span class="tag">general</span>`; // backup default tag
+        }
+
         const customPostCard = document.createElement('div');
         customPostCard.className = 'post-card';
         customPostCard.innerHTML = `
@@ -43,8 +50,7 @@ if (mainFeed) {
             </div>
             <div class="post-footer">
                 <div class="tags-container">
-                    <span class="tag">user-snap</span>
-                    <span class="tag">local-db</span>
+                    ${tagsHTML}
                 </div>
                 <div class="post-actions">
                     <button class="upvote-btn" title="Upvote"><i class='bx bx-upvote'></i> <span class="upvote-count">0</span></button>
