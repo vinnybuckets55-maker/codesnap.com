@@ -10,7 +10,7 @@ if (addTagBtn) {
     addTagBtn.addEventListener('click', () => {
         const tagText = tagInput.value.trim().toLowerCase(); // keeps tag cases uniform
         
-        // Prevent empty tags or duplicate inputs
+
         if (tagText !== "" && !currentTags.includes(tagText)) {
             currentTags.push(tagText);
             
