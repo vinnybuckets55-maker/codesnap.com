@@ -18,23 +18,26 @@ function setupUpvoteButton(button) {
         countSpan.textContent = currentCount;
     });
 }
+
 // --- 2. LOGIC FOR THE HOMEPAGE (index.html) ---
 const mainFeed = document.getElementById('mainFeed');
 if (mainFeed) {
+    // Activate upvotes on default posts
     const existingButtons = mainFeed.querySelectorAll('.upvote-btn');
     existingButtons.forEach(btn => setupUpvoteButton(btn));
 
+    // Pull custom posts from memory
     const savedPosts = JSON.parse(localStorage.getItem('codesnap_local_db')) || [];
 
+    // Prepend saved posts to the feed
     savedPosts.forEach(post => {
-        // Build the tags HTML dynamically based on whatever the user typed!
         let tagsHTML = '';
         if (post.tags && post.tags.length > 0) {
             post.tags.forEach(singleTag => {
                 tagsHTML += `<span class="tag">${singleTag}</span>`;
             });
         } else {
-            tagsHTML = `<span class="tag">general</span>`; // backup default tag
+            tagsHTML = `<span class="tag">general</span>`;
         }
 
         const customPostCard = document.createElement('div');
@@ -62,4 +65,35 @@ if (mainFeed) {
         const newUpvoteBtn = customPostCard.querySelector('.upvote-btn');
         setupUpvoteButton(newUpvoteBtn);
     });
+
+    // --- NEW: SEARCH ELEMENT FILTER LOGIC ---
+    const searchInput = document.querySelector('.top-ribbon input[type="text"]');
+    
+    if (searchInput) {
+        searchInput.addEventListener('keydown', (event) => {
+            // Check if the user hit the Enter key
+            if (event.key === 'Enter') {
+                // Grab what they typed, make it lowercase, and split multiple words by spaces/commas
+                const queryText = searchInput.value.trim().toLowerCase();
+                const searchTerms = queryText.split(/[\s,]+/).filter(term => term !== "");
+
+                // Grab all post cards currently sitting in the feed
+                const postCards = mainFeed.querySelectorAll('.post-card');
+
+                postCards.forEach(card => {
+                    // Extract all the tag text strings inside this specific post card
+                    const postTags = Array.from(card.querySelectorAll('.tag')).map(t => t.textContent.trim().toLowerCase());
+
+                    // Check if EVERY SINGLE term searched matches a tag inside this post
+                    const matchesAllTerms = searchTerms.every(term => postTags.includes(term));
+
+                    if (searchTerms.length === 0 || matchesAllTerms) {
+                        card.style.display = 'block'; // Show it!
+                    } else {
+                        card.style.display = 'none';  // Hide it!
+                    }
+                });
+            }
+        });
+    }
 }
