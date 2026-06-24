@@ -4,12 +4,12 @@
     <title>CodeSnap</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
 
     <div class="sidebar">
         <h2>CS 🚀</h2> 
-        
         <p><button title="Friends"><i class='bx bx-user-plus'></i></button></p>
         <p><button title="DMs"><i class='bx bx-message-rounded-detail'></i></button></p>
         <p><button title="Forums"><i class='bx bx-git-repo-forked'></i></button></p>
@@ -31,9 +31,7 @@
             
             <div class="post-card">
                 <div class="post-header">
-                    <button class="profile-link" title="View Profile">
-                        <i class='bx bx-user-circle'></i>
-                    </button>
+                    <button class="profile-link" title="View Profile"><i class='bx bx-user-circle'></i></button>
                     <h3 class="post-title">Help c++</h3>
                 </div>
                 <div class="post-body">
@@ -45,7 +43,7 @@
                         <span class="tag">help</span>
                     </div>
                     <div class="post-actions">
-                        <button title="Upvote"><i class='bx bx-upvote'></i></button>
+                        <button class="upvote-btn" title="Upvote"><i class='bx bx-upvote'></i> <span class="upvote-count">0</span></button>
                         <button title="Reply/Debug"><i class='bx bx-code-alt'></i></button>
                     </div>
                 </div>
@@ -53,9 +51,7 @@
 
             <div class="post-card">
                 <div class="post-header">
-                    <button class="profile-link" title="View Profile">
-                        <i class='bx bx-user-circle'></i>
-                    </button>
+                    <button class="profile-link" title="View Profile"><i class='bx bx-user-circle'></i></button>
                     <h3 class="post-title">Python IndentationError?</h3>
                 </div>
                 <div class="post-body">
@@ -67,7 +63,7 @@
                         <span class="tag">bugs</span>
                     </div>
                     <div class="post-actions">
-                        <button title="Upvote"><i class='bx bx-upvote'></i></button>
+                        <button class="upvote-btn" title="Upvote"><i class='bx bx-upvote'></i> <span class="upvote-count">0</span></button>
                         <button title="Reply/Debug"><i class='bx bx-code-alt'></i></button>
                     </div>
                 </div>
