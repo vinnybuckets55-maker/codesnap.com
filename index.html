@@ -13,7 +13,7 @@
         <p><button title="Friends"><i class='bx bx-user-plus'></i></button></p>
         <p><button title="DMs"><i class='bx bx-message-rounded-detail'></i></button></p>
         <p><button title="Forums"><i class='bx bx-git-repo-forked'></i></button></p>
-        <p><button title="Reels"><i class='bx bx-video'></i></button></p>
+        <p><a href="reels.html"><button title="Reels"><i class='bx bx-video'></i></button></a></p>
         <p><button title="Profile"><i class='bx bx-user-circle'></i></button></p>
     </div>
 
@@ -21,7 +21,9 @@
         <div class="top-ribbon">
             <h1>Good Morning, Vincent!</h1>
             <div class="ribbon-actions">
-                <button class="btn-primary" title="New Post"><i class='bx bx-plus'></i></button>
+                <a href="create-post.html" style="text-decoration: none;">
+                    <button class="btn-primary" title="New Post"><i class='bx bx-plus'></i></button>
+                </a>
                 <a href="reels.html" style="text-decoration: none;">
                     <button class="btn-secondary" title="New Reel"><i class='bx bx-video'></i></button>
                 </a>
@@ -29,7 +31,7 @@
             </div>
         </div>
 
-        <div class="feed-posts">
+        <div class="feed-posts" id="mainFeed">
             
             <div class="post-card">
                 <div class="post-header">
