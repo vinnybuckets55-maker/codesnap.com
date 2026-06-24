@@ -63,31 +63,35 @@ if (mainFeed) {
 // --- 3. LOGIC FOR THE CREATION PAGE (create-post.html) ---
 const submitPostBtn = document.querySelector('.submit-post-btn');
 if (submitPostBtn) {
+    console.log("Database Brain: Code detected the Snap button successfully!");
+
     submitPostBtn.addEventListener('click', () => {
+        console.log("Database Brain: Snap button was clicked!");
+        
         const titleText = document.getElementById('postTitle').value.trim();
         const bodyText = document.getElementById('postBody').value.trim();
+
+        console.log("Typed Title:", titleText);
+        console.log("Typed Body:", bodyText);
 
         if (titleText === "" || bodyText === "") {
             alert("Yo, fill out both the title and description before snapping!");
             return;
         }
 
-        // Get the current list of posts from storage, or start a clean empty array
         const currentDatabase = JSON.parse(localStorage.getItem('codesnap_local_db')) || [];
-
-        // Bundle your text inputs into a tidy JavaScript object block
+        
         const newPostData = {
             title: titleText,
             body: bodyText
         };
 
-        // Push the new item into our database array
         currentDatabase.push(newPostData);
-
-        // Write the updated database back into the browser's localStorage disk
         localStorage.setItem('codesnap_local_db', JSON.stringify(currentDatabase));
+        
+        console.log("Database Brain: Post successfully saved to local storage! Redirecting now...");
 
-        // Router redirect: smooth hop right back to your homepage feed!
+        // Try this absolute path redirect method for GitHub pages compatibility
         window.location.href = 'index.html';
     });
 }
