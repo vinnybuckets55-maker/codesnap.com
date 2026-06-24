@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CodeSnap Posts</title>
+    <title>CodeSnap - Create Post</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
     <script src="create.js" defer></script>
@@ -32,6 +32,13 @@
                 <h3 style="margin: 0; color: #0077ff;">What's the bug?</h3>
                 <input type="text" id="postTitle" placeholder="Title (e.g., C++ Vector Out of Bounds Error)" style="background-color: #1a1a1e; border: 1px solid #2a2a30; color: #ffffff; padding: 12px; border-radius: 8px; outline: none; font-size: 15px;">
                 <textarea id="postBody" placeholder="Paste your code snippet or describe what's breaking..." style="background-color: #1a1a1e; border: 1px solid #2a2a30; color: #ffffff; padding: 12px; border-radius: 8px; outline: none; font-size: 15px; height: 180px; resize: none; font-family: sans-serif;"></textarea>
+                
+                <div style="display: flex; gap: 10px; align-items: center; margin-top: 5px;">
+                    <input type="text" id="tagInput" placeholder="Type a tag (e.g., c++, arrays) then click +" style="background-color: #1a1a1e; border: 1px solid #2a2a30; color: #ffffff; padding: 10px; border-radius: 8px; outline: none; font-size: 14px; flex: 1;">
+                    <button id="addTagBtn" type="button" style="background-color: #1a1a1e; border: 1px solid #2a2a30; color: #0077ff; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; transition: 0.2s;"><i class='bx bx-plus'></i></button>
+                </div>
+                <div id="tagsList" class="tags-container" style="margin-top: 5px; min-height: 25px;"></div>
+
                 <button class="submit-post-btn" style="background-color: #0077ff; color: #ffffff; border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer; transition: 0.2s;">
                     Snap It Live 🚀
                 </button>
