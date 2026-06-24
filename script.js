@@ -22,14 +22,14 @@ function setupUpvoteButton(button) {
 // --- 2. LOGIC FOR THE HOMEPAGE (index.html) ---
 const mainFeed = document.getElementById('mainFeed');
 if (mainFeed) {
-    // Activate upvotes on the hardcoded C++ and Python posts
+    // Activate upvotes on default posts
     const existingButtons = mainFeed.querySelectorAll('.upvote-btn');
     existingButtons.forEach(btn => setupUpvoteButton(btn));
 
-    // Pull any custom posts stored inside the browser's localStorage save-file
+    // Pull custom posts from memory
     const savedPosts = JSON.parse(localStorage.getItem('codesnap_local_db')) || [];
 
-    // Loop through your saved items and prepend them to the top of the feed
+    // Prepend saved posts to the feed
     savedPosts.forEach(post => {
         const customPostCard = document.createElement('div');
         customPostCard.className = 'post-card';
@@ -54,44 +54,7 @@ if (mainFeed) {
         `;
         mainFeed.prepend(customPostCard);
 
-        // Turn on upvote tracking for this newly rendered custom post
         const newUpvoteBtn = customPostCard.querySelector('.upvote-btn');
         setupUpvoteButton(newUpvoteBtn);
-    });
-}
-
-// --- 3. LOGIC FOR THE CREATION PAGE (create-post.html) ---
-const submitPostBtn = document.querySelector('.submit-post-btn');
-if (submitPostBtn) {
-    console.log("Database Brain: Code detected the Snap button successfully!");
-
-    submitPostBtn.addEventListener('click', () => {
-        console.log("Database Brain: Snap button was clicked!");
-        
-        const titleText = document.getElementById('postTitle').value.trim();
-        const bodyText = document.getElementById('postBody').value.trim();
-
-        console.log("Typed Title:", titleText);
-        console.log("Typed Body:", bodyText);
-
-        if (titleText === "" || bodyText === "") {
-            alert("Yo, fill out both the title and description before snapping!");
-            return;
-        }
-
-        const currentDatabase = JSON.parse(localStorage.getItem('codesnap_local_db')) || [];
-        
-        const newPostData = {
-            title: titleText,
-            body: bodyText
-        };
-
-        currentDatabase.push(newPostData);
-        localStorage.setItem('codesnap_local_db', JSON.stringify(currentDatabase));
-        
-        console.log("Database Brain: Post successfully saved to local storage! Redirecting now...");
-
-        // Try this absolute path redirect method for GitHub pages compatibility
-        window.location.href = 'index.html';
     });
 }
