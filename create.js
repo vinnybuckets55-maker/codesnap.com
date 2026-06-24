@@ -1,30 +1,53 @@
 const submitPostBtn = document.querySelector('.submit-post-btn');
+const addTagBtn = document.getElementById('addTagBtn');
+const tagInput = document.getElementById('tagInput');
+const tagsList = document.getElementById('tagsList');
+
+let currentTags = []; // Stores our active tag words for this current draft
+
+// Listen for the tag "+" button
+if (addTagBtn) {
+    addTagBtn.addEventListener('click', () => {
+        const tagText = tagInput.value.trim().toLowerCase(); // keeps tag cases uniform
+        
+        // Prevent empty tags or duplicate inputs
+        if (tagText !== "" && !currentTags.includes(tagText)) {
+            currentTags.push(tagText);
+            
+            // Build the visual tag bubble on screen inside the creation card
+            const tagSpan = document.createElement('span');
+            tagSpan.className = 'tag';
+            tagSpan.textContent = tagText;
+            tagsList.appendChild(tagSpan);
+            
+            // Wipe the input clean for your next tag
+            tagInput.value = "";
+        }
+    });
+}
 
 if (submitPostBtn) {
     submitPostBtn.addEventListener('click', () => {
         const titleText = document.getElementById('postTitle').value.trim();
         const bodyText = document.getElementById('postBody').value.trim();
 
-        // Prevent empty submissions
         if (titleText === "" || bodyText === "") {
             alert("Yo, fill out both the title and description before snapping!");
             return;
         }
 
-        // Pull existing data from browser save-file
         const currentDatabase = JSON.parse(localStorage.getItem('codesnap_local_db')) || [];
 
-        // Bundle inputs into an object
+        // Save everything including our dynamic tags list
         const newPostData = {
             title: titleText,
-            body: bodyText
+            body: bodyText,
+            tags: currentTags 
         };
 
-        // Push and save to localStorage
         currentDatabase.push(newPostData);
         localStorage.setItem('codesnap_local_db', JSON.stringify(currentDatabase));
 
-        // Redirect back to the home feed
         window.location.href = 'index.html';
     });
 }
