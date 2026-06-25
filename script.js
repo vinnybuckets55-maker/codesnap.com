@@ -19,17 +19,36 @@ function setupUpvoteButton(button) {
     });
 }
 
-// --- 2. LOGIC FOR THE HOMEPAGE (index.html) ---
+// --- 2. CLIPBOARD COPY BUTTON CONTROLLER ---
+function setupCopyButton(container) {
+    const copyBtn = container.querySelector('.copy-code-btn');
+    const codeBlock = container.querySelector('code');
+    
+    if (copyBtn && codeBlock) {
+        copyBtn.addEventListener('click', () => {
+            // Write text content directly to user's computer clipboard
+            navigator.clipboard.writeText(codeBlock.textContent).then(() => {
+                copyBtn.innerHTML = `<i class='bx bx-check' style='color:#00ff88;'></i> Copied!`;
+                copyBtn.style.borderColor = "#00ff88";
+                
+                // Reset button back to original state after 2 seconds
+                setTimeout(() => {
+                    copyBtn.innerHTML = `<i class='bx bx-copy'></i> Copy`;
+                    copyBtn.style.borderColor = "#2a2a30";
+                }, 2000);
+            });
+        });
+    }
+}
+
+// --- 3. HOMEPAGE FEED BUILDER ---
 const mainFeed = document.getElementById('mainFeed');
 if (mainFeed) {
-    // Activate upvotes on default posts
     const existingButtons = mainFeed.querySelectorAll('.upvote-btn');
     existingButtons.forEach(btn => setupUpvoteButton(btn));
 
-    // Pull custom posts from memory
     const savedPosts = JSON.parse(localStorage.getItem('codesnap_local_db')) || [];
 
-    // Prepend saved posts to the feed
     savedPosts.forEach(post => {
         let tagsHTML = '';
         if (post.tags && post.tags.length > 0) {
@@ -38,6 +57,20 @@ if (mainFeed) {
             });
         } else {
             tagsHTML = `<span class="tag">general</span>`;
+        }
+
+        // Custom verification: If post contains code, assemble a professional dark syntax viewer container
+        let codeSectionHTML = '';
+        if (post.code && post.code !== '') {
+            codeSectionHTML = `
+                <div class="code-editor-container" style="background-color: #111114; border: 1px solid #2a2a30; border-radius: 8px; margin: 12px 0; position: relative;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; background-color:#16161a; padding: 6px 12px; border-bottom:1px solid #2a2a30; border-radius: 8px 8px 0 0;">
+                        <span style="font-family:monospace; font-size:12px; color:#8e8e93;">source-file</span>
+                        <button class="copy-code-btn" style="background:none; border:1px solid #2a2a30; color:#8e8e93; font-size:11px; padding:3px 8px; border-radius:4px; cursor:pointer; display:flex; align-items:center; gap:4px;"><i class='bx bx-copy'></i> Copy</button>
+                    </div>
+                    <pre style="margin:0; padding:12px; overflow-x:auto;"><code style="font-family:monospace; font-size:13px; color:#a9b7c6; white-space:pre;">${post.code}</code></pre>
+                </div>
+            `;
         }
 
         const customPostCard = document.createElement('div');
@@ -49,6 +82,7 @@ if (mainFeed) {
             </div>
             <div class="post-body">
                 <p>${post.body}</p>
+                ${codeSectionHTML} 
             </div>
             <div class="post-footer">
                 <div class="tags-container">
@@ -64,28 +98,27 @@ if (mainFeed) {
 
         const newUpvoteBtn = customPostCard.querySelector('.upvote-btn');
         setupUpvoteButton(newUpvoteBtn);
+
+        // Turn on clipboard tracking if this custom card features code lines
+        if (post.code && post.code !== '') {
+            setupCopyButton(customPostCard);
+        }
     });
 
-    // --- SEARCH BAR TOKEN CHIPS LOGIC ---
-    let activeSearchTags = []; // Holds all currently active filter tags
+    // --- SEARCH BAR SYSTEM ---
+    let activeSearchTags = [];
     const searchInput = document.querySelector('.top-ribbon input[type="text"]');
     const searchTagsList = document.getElementById('searchTagsList');
 
-    // Central filtering execution function
     function filterFeedPosts() {
         const postCards = mainFeed.querySelectorAll('.post-card');
-        
         postCards.forEach(card => {
-            // Get all tags pinned on this specific post
             const postTags = Array.from(card.querySelectorAll('.tag')).map(t => t.textContent.trim().toLowerCase());
-            
-            // Check if every single active search filter matches something on this post
             const matchesAllFilters = activeSearchTags.every(filterTag => postTags.includes(filterTag));
-
             if (activeSearchTags.length === 0 || matchesAllFilters) {
-                card.style.display = 'block'; // Match found, show post
+                card.style.display = 'block';
             } else {
-                card.style.display = 'none';  // Missing a tag, hide post
+                card.style.display = 'none';
             }
         });
     }
@@ -94,31 +127,21 @@ if (mainFeed) {
         searchInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
                 const tagText = searchInput.value.trim().toLowerCase();
-
-                // Prevent blank or duplicate filter tags
                 if (tagText !== "" && !activeSearchTags.includes(tagText)) {
                     activeSearchTags.push(tagText);
-
-                    // Create a clickable tag bubble chip under the search bar
                     const searchChip = document.createElement('span');
                     searchChip.className = 'tag';
                     searchChip.style.cursor = 'pointer';
                     searchChip.title = 'Click to remove filter';
-                    // Adds a little 'x' icon next to the word
                     searchChip.innerHTML = `${tagText} <i class='bx bx-x' style='margin-left: 4px; vertical-align: middle; font-size: 11px;'></i>`;
-
-                    // If a user clicks the bubble, delete it and recalculate search feed
                     searchChip.addEventListener('click', () => {
                         activeSearchTags = activeSearchTags.filter(t => t !== tagText);
                         searchChip.remove();
                         filterFeedPosts();
                     });
-
                     searchTagsList.appendChild(searchChip);
                     filterFeedPosts();
                 }
-                
-                // Clear the textbox completely so they can type another tag immediately
                 searchInput.value = "";
             }
         });
