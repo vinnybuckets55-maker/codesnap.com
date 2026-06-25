@@ -26,12 +26,9 @@ function setupCopyButton(container) {
     
     if (copyBtn && codeBlock) {
         copyBtn.addEventListener('click', () => {
-            // Write text content directly to user's computer clipboard
             navigator.clipboard.writeText(codeBlock.textContent).then(() => {
                 copyBtn.innerHTML = `<i class='bx bx-check' style='color:#00ff88;'></i> Copied!`;
                 copyBtn.style.borderColor = "#00ff88";
-                
-                // Reset button back to original state after 2 seconds
                 setTimeout(() => {
                     copyBtn.innerHTML = `<i class='bx bx-copy'></i> Copy`;
                     copyBtn.style.borderColor = "#2a2a30";
@@ -41,12 +38,68 @@ function setupCopyButton(container) {
     }
 }
 
-// --- 3. HOMEPAGE FEED BUILDER ---
+// --- 3. NEW: REUSABLE DEBUG COMMENTS PANEL HANDLER ---
+function setupDebugPanel(card, postTitleForDatabase = null) {
+    const debugBtn = card.querySelector('.debug-btn');
+    const debugPanel = card.querySelector('.debug-panel');
+    const submitReplyBtn = card.querySelector('.submit-reply-btn');
+    const replyInput = card.querySelector('.reply-input-row input');
+    const repliesList = card.querySelector('.replies-list');
+
+    if (debugBtn && debugPanel) {
+        // Toggle Panel Open/Closed when clicking the </> icon
+        debugBtn.addEventListener('click', () => {
+            debugPanel.classList.toggle('open');
+            if (debugPanel.classList.contains('open')) {
+                debugBtn.style.color = "#0077ff"; // Highlight icon blue when open
+            } else {
+                debugBtn.style.color = "#8e8e93"; // Gray when closed
+            }
+        });
+    }
+
+    if (submitReplyBtn && replyInput && repliesList) {
+        submitReplyBtn.addEventListener('click', () => {
+            const replyText = replyInput.value.trim();
+            if (replyText === "") return;
+
+            // Generate comment block element
+            const newReplyItem = document.createElement('div');
+            newReplyItem.className = 'reply-item';
+            newReplyItem.innerHTML = `<strong>@you:</strong> ${replyText}`;
+            repliesList.appendChild(newReplyItem);
+
+            // If this is a custom post from LocalStorage, write the reply to memory
+            if (postTitleForDatabase) {
+                const savedPosts = JSON.parse(localStorage.getItem('codesnap_local_db')) || [];
+                const updatedPosts = savedPosts.map(p => {
+                    if (p.title === postTitleForDatabase) {
+                        if (!p.replies) p.replies = [];
+                        p.replies.push(replyText);
+                    }
+                    return p;
+                });
+                localStorage.setItem('codesnap_local_db', JSON.stringify(updatedPosts));
+            }
+
+            replyInput.value = ""; // Clear box
+            repliesList.scrollTop = repliesList.scrollHeight; // Auto-scroll down
+        });
+    }
+}
+
+// --- 4. HOMEPAGE STREAM ENGINE ---
 const mainFeed = document.getElementById('mainFeed');
 if (mainFeed) {
-    const existingButtons = mainFeed.querySelectorAll('.upvote-btn');
-    existingButtons.forEach(btn => setupUpvoteButton(btn));
+    // Turn on upvote and dropdown handlers for default C++ and Python cards
+    const defaultCards = mainFeed.querySelectorAll('.post-card');
+    defaultCards.forEach(card => {
+        const upBtn = card.querySelector('.upvote-btn');
+        if (upBtn) setupUpvoteButton(upBtn);
+        setupDebugPanel(card); // Standard panel toggle
+    });
 
+    // Pull database posts from memory
     const savedPosts = JSON.parse(localStorage.getItem('codesnap_local_db')) || [];
 
     savedPosts.forEach(post => {
@@ -59,7 +112,6 @@ if (mainFeed) {
             tagsHTML = `<span class="tag">general</span>`;
         }
 
-        // Custom verification: If post contains code, assemble a professional dark syntax viewer container
         let codeSectionHTML = '';
         if (post.code && post.code !== '') {
             codeSectionHTML = `
@@ -71,6 +123,14 @@ if (mainFeed) {
                     <pre style="margin:0; padding:12px; overflow-x:auto;"><code style="font-family:monospace; font-size:13px; color:#a9b7c6; white-space:pre;">${post.code}</code></pre>
                 </div>
             `;
+        }
+
+        // Render previously saved comments if any exist in storage
+        let repliesHTML = '';
+        if (post.replies && post.replies.length > 0) {
+            post.replies.forEach(rep => {
+                repliesHTML += `<div class="reply-item"><strong>@you:</strong> ${rep}</div>`;
+            });
         }
 
         const customPostCard = document.createElement('div');
@@ -90,22 +150,31 @@ if (mainFeed) {
                 </div>
                 <div class="post-actions">
                     <button class="upvote-btn" title="Upvote"><i class='bx bx-upvote'></i> <span class="upvote-count">0</span></button>
-                    <button title="Reply/Debug"><i class='bx bx-code-alt'></i></button>
+                    <button class="debug-btn" title="Reply/Debug"><i class='bx bx-code-alt'></i></button>
+                </div>
+            </div>
+            <div class="debug-panel">
+                <div class="replies-list">
+                    ${repliesHTML}
+                </div>
+                <div class="reply-input-row">
+                    <input type="text" placeholder="Suggest a debug fix...">
+                    <button class="submit-reply-btn">Submit Fix</button>
                 </div>
             </div>
         `;
         mainFeed.prepend(customPostCard);
 
+        // Turn on upvote and copy event actions
         const newUpvoteBtn = customPostCard.querySelector('.upvote-btn');
         setupUpvoteButton(newUpvoteBtn);
+        if (post.code && post.code !== '') setupCopyButton(customPostCard);
 
-        // Turn on clipboard tracking if this custom card features code lines
-        if (post.code && post.code !== '') {
-            setupCopyButton(customPostCard);
-        }
+        // Connect the active comments engine to this post
+        setupDebugPanel(customPostCard, post.title);
     });
 
-    // --- SEARCH BAR SYSTEM ---
+    // --- SEARCH BAR ENGINE ---
     let activeSearchTags = [];
     const searchInput = document.querySelector('.top-ribbon input[type="text"]');
     const searchTagsList = document.getElementById('searchTagsList');
