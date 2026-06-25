@@ -271,3 +271,163 @@ body {
     background-color: #0077ff;
     color: #ffffff;
 }
+/* 8. CODE-SNAP MASTER PROFILE DESIGN */
+.profile-layout-grid {
+    display: flex;
+    gap: 30px;
+    background-color: #222227;
+    border: 1px solid #2a2a30;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.profile-left-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    min-width: 150px;
+}
+
+/* Profile Picture Frame Wrapper */
+.pfp-container {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background-color: #1a1a1e;
+    border: 2px dashed #0077ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.pfp-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pfp-container i.placeholder-icon {
+    font-size: 60px;
+    color: #8e8e93;
+}
+
+/* Image Tint Overlay during Edit Mode */
+.pfp-overlay-tint {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 119, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.2s;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+}
+
+.pfp-container.edit-active:hover .pfp-overlay-tint {
+    opacity: 1;
+}
+
+.follow-stats-row {
+    display: flex;
+    gap: 15px;
+    font-size: 13px;
+    color: #8e8e93;
+}
+
+.profile-right-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bio-display-box {
+    background-color: #1a1a1e;
+    border: 1px solid #2a2a30;
+    padding: 15px;
+    border-radius: 8px;
+    min-height: 80px;
+    color: #e4e4e6;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.bio-edit-textarea {
+    width: 100%;
+    height: 80px;
+    background-color: #111114;
+    border: 1px solid #0077ff;
+    color: #ffffff;
+    padding: 12px;
+    border-radius: 8px;
+    resize: none;
+    outline: none;
+    font-size: 14px;
+    display: none;
+}
+
+/* 9. BOTTOM NAVIGATION SUB-TABS PANEL */
+.profile-sub-tabs-row {
+    display: flex;
+    border-bottom: 1px solid #2a2a30;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.profile-tab-btn {
+    background: none;
+    border: none;
+    color: #8e8e93;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 5px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: 0.2s;
+}
+
+.profile-tab-btn.active {
+    color: #0077ff;
+    border-bottom-color: #0077ff;
+}
+
+.tab-pane-content {
+    display: none;
+}
+
+.tab-pane-content.active {
+    display: block;
+}
+
+/* Dotted Delineation Crop Mask Circle */
+.crop-bounding-circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 3px dashed #0077ff;
+    margin: 20px auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #111114;
+}
+
+.crop-bounding-circle img {
+    max-width: 100%;
+    max-height: 100%;
+}
