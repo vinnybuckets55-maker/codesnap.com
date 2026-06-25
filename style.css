@@ -1,4 +1,6 @@
-/* 1. THE MAIN BACKGROUND */
+/* ==========================================================================
+   1. THE MAIN BACKGROUND & CORE RULES
+   ========================================================================== */
 body {
     margin: 0;
     font-family: sans-serif;
@@ -8,7 +10,9 @@ body {
     height: 100vh;
 }
 
-/* 2. THE LEFT SIDEBAR */
+/* ==========================================================================
+   2. THE LEFT SIDEBAR
+   ========================================================================== */
 .sidebar {
     width: 75px;
     background-color: #111114;
@@ -39,13 +43,15 @@ body {
     color: #0077ff;
 }
 
-/* 3. THE MAIN CONTENT AREA */
+/* ==========================================================================
+   3. THE MAIN CONTENT AREA
+   ========================================================================== */
 .main-content {
     flex: 1;
     padding: 30px;
     display: flex;
     flex-direction: column;
-    overflow-y: auto; /* Adds clean scrolling if you have tons of posts */
+    overflow-y: auto;
 }
 
 .top-ribbon {
@@ -63,7 +69,9 @@ body {
     margin: 0;
 }
 
-/* 4. THE CODE-SNAP POST BUBBLES */
+/* ==========================================================================
+   4. THE CODE-SNAP POST BUBBLES
+   ========================================================================== */
 .feed-posts {
     display: flex;
     flex-direction: column;
@@ -149,25 +157,26 @@ body {
     border-color: #0077ff;
 }
 
-/* 5. CIRCULAR RIBBON BUTTONS & SEARCH INTERACTION */
+/* ==========================================================================
+   5. NAVIGATION RIBBON INTERACTIONS & SEARCH
+   ========================================================================== */
 .ribbon-actions {
     display: flex;
     align-items: center;
     gap: 14px;
 }
 
-/* Custom large circular buttons */
 .ribbon-actions button {
     background-color: #1a1a1e;
     border: 1px solid #2a2a30;
     color: #ffffff;
-    width: 42px; /* Fixed equal height and width */
+    width: 42px;
     height: 42px;
-    border-radius: 50%; /* Makes it a perfect circle */
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px; /* Pumps up the size of the + and camera icon */
+    font-size: 20px;
     cursor: pointer;
     transition: 0.2s ease;
     padding: 0;
@@ -176,10 +185,9 @@ body {
 .ribbon-actions button:hover {
     background-color: #0077ff;
     border-color: #0077ff;
-    transform: scale(1.08); /* Tiny pop forward effect on hover */
+    transform: scale(1.08);
 }
 
-/* Giving the + button a sleek permanent blue accent rim */
 .ribbon-actions .btn-primary {
     border-color: #0077ff;
     color: #0077ff;
@@ -189,33 +197,34 @@ body {
     color: #ffffff;
 }
 
-/* Polished fully rounded search bar */
 .ribbon-actions input[type="text"] {
     background-color: #1a1a1e;
     border: 1px solid #2a2a30;
     color: #ffffff;
     padding: 0 16px;
-    border-radius: 20px; /* Pill-shaped search box matches the buttons */
+    border-radius: 20px;
     outline: none;
     font-size: 14px;
     width: 150px;
-    height: 40px; /* Matches button height perfectly */
+    height: 40px;
     transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .ribbon-actions input[type="text"]:focus {
     border-color: #0077ff;
-    width: 230px; /* Smooth widening motion */
+    width: 230px;
 }
-/* 7. COLLAPSIBLE DEBUG FEED (COMMENTS) */
+
+/* ==========================================================================
+   7. COLLAPSIBLE DEBUG FEED (COMMENTS)
+   ========================================================================== */
 .debug-panel {
-    display: none; /* Completely hidden by default */
+    display: none;
     border-top: 1px solid #2a2a30;
     margin-top: 15px;
     padding-top: 15px;
 }
 
-/* The magic utility class toggled by JavaScript */
 .debug-panel.open {
     display: block; 
 }
@@ -226,7 +235,7 @@ body {
     gap: 10px;
     margin-bottom: 15px;
     max-height: 200px;
-    overflow-y: auto; /* Lets comments scroll if there are too many */
+    overflow-y: auto;
 }
 
 .reply-item {
@@ -271,12 +280,12 @@ body {
     background-color: #0077ff;
     color: #ffffff;
 }
-/* ==========================================================================
-   8. CODE-SNAP MASTER PROFILE DESIGN (Sealed & Self-Contained)
-   ========================================================================== */
 
+/* ==========================================================================
+   8. CODE-SNAP MASTER PROFILE DESIGN
+   ========================================================================== */
 .profile-layout-grid {
-    display: flex !important;
+    display: flex;
     flex-direction: row;
     gap: 30px;
     background-color: #222227;
@@ -288,14 +297,13 @@ body {
 }
 
 .profile-left-col {
-    display: flex !important;
+    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 15px;
     min-width: 160px;
 }
 
-/* Profile Picture Frame Wrapper */
 .pfp-container {
     position: relative;
     width: 110px;
@@ -303,7 +311,7 @@ body {
     border-radius: 50%;
     background-color: #1a1a1e;
     border: 2px dashed #0077ff;
-    display: flex !important;
+    display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
@@ -322,7 +330,6 @@ body {
     color: #8e8e93;
 }
 
-/* Image Tint Overlay during Edit Mode */
 .pfp-overlay-tint {
     position: absolute;
     top: 0;
@@ -385,9 +392,11 @@ body {
     display: none;
 }
 
-/* 9. BOTTOM NAVIGATION SUB-TABS PANEL */
+/* ==========================================================================
+   9. BOTTOM NAVIGATION SUB-TABS PANEL
+   ========================================================================== */
 .profile-sub-tabs-row {
-    display: flex !important;
+    display: flex;
     flex-direction: row;
     border-bottom: 1px solid #2a2a30;
     gap: 20px;
@@ -395,20 +404,21 @@ body {
 }
 
 .profile-tab-btn {
-    background: none !important;
-    border: none !important;
-    color: #8e8e93 !important;
-    font-size: 15px;
+    background: #1a1a1e;
+    border: 1px solid #2a2a30;
+    color: #8e8e93;
+    font-size: 14px;
     font-weight: 600;
-    padding: 10px 5px;
+    padding: 8px 16px;
+    border-radius: 8px;
     cursor: pointer;
-    border-bottom: 2px solid transparent !important;
     transition: 0.2s;
 }
 
 .profile-tab-btn.active {
-    color: #0077ff !important;
-    border-bottom-color: #0077ff !important;
+    color: #ffffff;
+    background-color: #0077ff;
+    border-color: #0077ff;
 }
 
 .tab-pane-content {
@@ -423,7 +433,7 @@ body {
    10. MASTER POPUP OVERLAYS & CROP MASK RULES
    ========================================================================== */
 .modal-overlay {
-    display: none; /* Completely snaps windows out of visibility by default */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -435,9 +445,8 @@ body {
     align-items: center;
 }
 
-/* Universal modifier targeting the open state */
 .modal-overlay.open {
-    display: flex !important;
+    display: flex;
 }
 
 .modal-box {
