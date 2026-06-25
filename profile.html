@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CodeSnap - Profile</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+    <script src="profile.js" defer></script>
+</head>
+<body>
+
+    <div class="sidebar">
+        <a href="index.html" style="text-decoration: none;"><h2>CS 🚀</h2></a> 
+        <p><a href="index.html"><button title="Home"><i class='bx bx-home-alt'></i></button></a></p>
+        <p><button title="Notifications"><i class='bx bx-bell'></i></button></p>
+        <p><button title="DMs"><i class='bx bx-message-rounded-detail'></i></button></p>
+        <p><button title="Forums"><i class='bx bx-git-repo-forked'></i></button></p>
+        <p><a href="reels.html"><button title="Reels"><i class='bx bx-video'></i></button></a></p>
+        <p><a href="profile.html"><button title="Profile"><i class='bx bx-user-circle'></i></button></a></p>
+    </div>
+
+    <div class="main-content">
+        
+        <div class="top-ribbon">
+            <h1 id="profileUsername">@vincent_codes</h1>
+            <div class="ribbon-actions">
+                <button id="editProfileBtn" class="btn-secondary" title="Edit Profile" style="width:42px; height:42px; border-radius:50%; padding:0; display:flex; align-items:center; justify-content:center;"><i class='bx bx-pencil' style="font-size:20px;"></i></button>
+            </div>
+        </div>
+
+        <div class="profile-layout-grid">
+            <div class="profile-left-col">
+                <input type="file" id="pfpFileLoader" accept="image/png, image/jpeg, image/jpg" style="display:none;">
+                
+                <div class="pfp-container" id="pfpDivFrame">
+                    <i class='bx bx-user placeholder-icon' id="pfpPlaceholderImg"></i>
+                    <img id="userPfpDisplay" style="display:none;" src="">
+                    <div class="pfp-overlay-tint" id="tintLabel">MANAGE IMAGE</div>
+                </div>
+                
+                <div class="follow-stats-row">
+                    <span><strong>1,240</strong> Followers</span>
+                    <span><strong>382</strong> Following</span>
+                </div>
+            </div>
+
+            <div class="profile-right-col">
+                <h4 style="margin:0; color:#8e8e93;">About Me</h4>
+                <div class="bio-display-box" id="bioTxtBox">Building CodeSnap from scratch! Welcome to my development corner.</div>
+                <textarea class="bio-edit-textarea" id="bioInputField"></textarea>
+            </div>
+        </div>
+
+        <div class="profile-sub-tabs-row">
+            <button class="profile-tab-btn active" data-target="paneReels">Reels</button>
+            <button class="profile-tab-btn" data-target="paneForums">Forums</button>
+            <button class="profile-tab-btn" data-target="panePosts">Posts</button>
+        </div>
+
+        <div class="tab-panes-container">
+            <div class="tab-pane-content active" id="paneReels">
+                <div class="post-card" style="text-align:center; padding:30px; color:#8e8e93;">
+                    <i class='bx bx-video' style='font-size:32px; color:#0077ff;'></i><p>No Reels clipped yet.</p>
+                </div>
+            </div>
+            <div class="tab-pane-content" id="paneForums">
+                <div class="post-card" style="text-align:center; padding:30px; color:#8e8e93;">
+                    <i class='bx bx-git-repo-forked' style='font-size:32px; color:#0077ff;'></i><p>No joined forums yet.</p>
+                </div>
+            </div>
+            <div class="tab-pane-content" id="panePosts">
+                <div class="post-card" style="text-align:center; padding:30px; color:#8e8e93;">
+                    <i class='bx bx-list-ul' style='font-size:32px; color:#0077ff;'></i><p>Your custom posts will display filtered down here.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="cropperModal" class="modal-overlay">
+        <div class="modal-box" style="text-align:center;">
+            <h2>Adjust Profile Picture</h2>
+            <div class="crop-bounding-circle">
+                <img id="cropperSourcePreview" src="">
+            </div>
+            <p style="color:#8e8e93; font-size:12px;">Scale/Position validation setup outline active.</p>
+            <div style="display:flex; gap:10px; margin-top:20px;">
+                <button id="cancelCropBtn" class="submit-post-btn" style="background-color:#1a1a1e; border:1px solid #2a2a30; color:#ffffff; flex:1;">Cancel</button>
+                <button id="saveCropBtn" class="submit-post-btn" style="flex:1;">Set As Profile Picture</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="pfpOptionsModal" class="modal-overlay">
+        <div class="modal-box" style="max-width:320px; text-align:center;">
+            <h3>Manage Avatar Image</h3>
+            <div style="display:flex; flex-direction:column; gap:10px; margin-top:20px;">
+                <button id="optChangeBtn" class="submit-post-btn">Change Profile Picture</button>
+                <button id="optRemoveBtn" class="submit-post-btn" style="background-color:#ff3b30; color:#ffffff;">Remove Profile Picture</button>
+                <button id="optCancelBtn" class="submit-post-btn" style="background-color:#1a1a1e; border:1px solid #2a2a30; color:#ffffff;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="pfpConfirmRemovalModal" class="modal-overlay">
+        <div class="modal-box" style="max-width:350px; text-align:center;">
+            <i class='bx bx-error-circle' style='font-size:48px; color:#ff3b30;'></i>
+            <h3>Are you sure?</h3>
+            <p style="color:#8e8e93; font-size:13px; line-height:1.4;">Are you sure you want to remove your profile picture? This action cannot be undone.</p>
+            <div style="display:flex; gap:10px; margin-top:20px;">
+                <button id="denyRemovalBtn" class="submit-post-btn" style="background-color:#1a1a1e; border:1px solid #2a2a30; color:#ffffff; flex:1;">Cancel</button>
+                <button id="assertRemovalBtn" class="submit-post-btn" style="background-color:#ff3b30; color:#ffffff; flex:1;">Yes, Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="dirtyWarningModal" class="modal-overlay">
+        <div class="modal-box" style="max-width:350px; text-align:center;">
+            <i class='bx bx-error' style='font-size:48px; color:#ffcc00;'></i>
+            <h3>Unsaved Changes</h3>
+            <p style="color:#8e8e93; font-size:13px;">You have unfinished changes on your profile text fields.</p>
+            <div style="display:flex; flex-direction:column; gap:10px; margin-top:20px;">
+                <button id="dirtySaveBtn" class="submit-post-btn">Save Changes</button>
+                <button id="dirtyDiscardBtn" class="submit-post-btn" style="background-color:#ff3b30; color:#ffffff;">Discard Changes</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
