@@ -711,3 +711,70 @@ body {
     background-color: #0077ff !important;
     color: #ffffff !important;
 }
+/* ==========================================================================
+   13. REELS CODE SNIPPET DRAWER LAYOUT
+   ========================================================================== */
+.reel-code-drawer {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 70% !important; /* Slightly taller than comments to fit code blocks */
+    background-color: #111114 !important;
+    border-top: 1px solid #2a2a30 !important;
+    border-radius: 16px 16px 0 0 !important;
+    z-index: 100 !important; /* Sits right on top */
+    display: none;
+    flex-direction: column;
+    padding: 15px !important;
+    box-sizing: border-box !important;
+}
+
+.reel-code-drawer.open {
+    display: flex !important;
+}
+
+.reel-code-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 12px !important;
+}
+
+.reel-code-copy-btn {
+    background: #1a1a1e !important;
+    border: 1px solid #2a2a30 !important;
+    color: #8e8e93 !important;
+    font-size: 11px !important;
+    padding: 4px 10px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    transition: 0.2s;
+}
+
+.reel-code-copy-btn:hover {
+    color: #ffffff !important;
+    border-color: #0077ff !important;
+}
+
+.reel-code-view-area {
+    flex: 1 !important;
+    background-color: #0c0c0e !important;
+    border: 1px solid #2a2a30 !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    margin: 0 !important;
+    overflow: auto !important;
+    text-align: left !important;
+}
+
+.reel-code-view-area code {
+    font-family: monospace !important;
+    font-size: 12px !important;
+    color: #a9b7c6 !important;
+    white-space: pre !important;
+}
