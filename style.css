@@ -478,3 +478,128 @@ body {
     max-height: 100%;
     object-fit: cover;
 }
+/* ==========================================================================
+   11. CODE-SNAP REELS FEED ARCHITECTURE
+   ========================================================================== */
+.reels-scroll-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 20px 0;
+    width: 100%;
+}
+
+/* Smartphone screen container box format */
+.reel-viewport-card {
+    position: relative;
+    width: 360px;
+    height: 640px;
+    background-color: #0c0c0e;
+    border: 1px solid #2a2a30;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Simulated video background placeholder look */
+.reel-video-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #111115 0%, #1a1a24 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #44444a;
+}
+
+.reel-video-placeholder i.video-glow {
+    font-size: 80px;
+    color: #0077ff;
+    opacity: 0.2;
+    text-shadow: 0 0 20px rgba(0, 119, 255, 0.4);
+}
+
+/* Left Bottom User Context Overlay metadata */
+.reel-bottom-meta {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 75%;
+    padding: 20px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.85));
+    z-index: 10;
+}
+
+.reel-bottom-meta h3 {
+    margin: 0 0 6px 0;
+    font-size: 15px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.reel-bottom-meta p {
+    margin: 0;
+    font-size: 13px;
+    color: #e4e4e6;
+    line-height: 1.4;
+}
+
+/* Right Side Vertical floating interaction actions panel */
+.reel-sidebar-actions {
+    position: absolute;
+    bottom: 30px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    z-index: 10;
+}
+
+.reel-action-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.reel-action-node button {
+    background: rgba(34, 34, 39, 0.7);
+    border: 1px solid rgba(42, 42, 48, 0.5);
+    backdrop-filter: blur(8px);
+    color: #e4e4e6;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.reel-action-node button:hover {
+    transform: scale(1.1);
+    color: #ffffff;
+}
+
+/* Specialized color toggles */
+.reel-action-node button.liked {
+    color: #ff3b30;
+    background: rgba(255, 59, 48, 0.15);
+    border-color: #ff3b30;
+}
+
+.reel-action-node span {
+    font-size: 12px;
+    color: #8e8e93;
+    font-weight: 600;
+}
