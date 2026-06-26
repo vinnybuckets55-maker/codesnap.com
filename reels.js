@@ -21,11 +21,17 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // FETCH LOGGED IN DATA STORES AT STARTUP
+    const savedPfp = localStorage.getItem("codesnap_user_pfp");
+    let userAvatarHTML = `<i class='bx bxs-user-circle' style='font-size:28px; color:#0077ff;'></i>`;
+    if (savedPfp) {
+        userAvatarHTML = `<img src="${savedPfp}" style="width:100%; height:100%; object-fit:cover;">`;
+    }
+
     // 2. SELF-CONTAINED INTERACTION SYSTEMS PER VIDEO SHORTS CARD
     const reelCards = document.querySelectorAll('.reel-viewport-card');
     
     reelCards.forEach(card => {
-        // Comment Component Selectors
         const commentBtn = card.querySelector('.reel-comment-btn');
         const commentDrawer = card.querySelector('.reel-comment-drawer');
         const closeCommentBtn = card.querySelector('.reel-comment-drawer .reel-comment-close');
@@ -34,7 +40,6 @@ window.addEventListener('DOMContentLoaded', () => {
         const commentsList = card.querySelector('.reel-comments-list');
         const commentCounter = card.querySelector('.comment-counter');
 
-        // NEW: Code Component Selectors
         const codeBtn = card.querySelector('.reel-code-view-btn');
         const codeDrawer = card.querySelector('.reel-code-drawer');
         const closeCodeBtn = card.querySelector('.reel-code-drawer .reel-comment-close');
@@ -44,7 +49,7 @@ window.addEventListener('DOMContentLoaded', () => {
         // --- COMMENTS DRAWER INTERACTION ---
         if (commentBtn && commentDrawer && closeCommentBtn) {
             commentBtn.addEventListener('click', () => {
-                if (codeDrawer) codeDrawer.classList.remove('open'); // Close code if open
+                if (codeDrawer) codeDrawer.classList.remove('open'); 
                 commentDrawer.classList.add('open');
             });
             closeCommentBtn.addEventListener('click', () => {
@@ -57,9 +62,18 @@ window.addEventListener('DOMContentLoaded', () => {
                 const commentText = commentInput.value.trim();
                 if (commentText === "") return;
 
+                // BUILD ROW FEATURING DYNAMIC PROFILE PICTURE ROUTING
                 const newCommentNode = document.createElement('div');
                 newCommentNode.className = 'reel-comment-item';
-                newCommentNode.innerHTML = `<strong>@you:</strong> ${commentText}`;
+                newCommentNode.innerHTML = `
+                    <a href="profile.html" class="reel-comment-pfp-link" title="View Profile">
+                        ${userAvatarHTML}
+                    </a>
+                    <div class="reel-comment-text-block">
+                        <strong>@you</strong>
+                        <p>${commentText}</p>
+                    </div>
+                `;
                 commentsList.appendChild(newCommentNode);
 
                 if (commentCounter) {
@@ -69,12 +83,18 @@ window.addEventListener('DOMContentLoaded', () => {
                 commentInput.value = "";
                 commentsList.scrollTop = commentsList.scrollHeight;
             });
+
+            commentInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    submitCommentBtn.click();
+                }
+            });
         }
 
-        // --- NEW: CODE DRAWER INTERACTION & COPY TRIPPERS ---
+        // --- CODE DRAWER INTERACTION ---
         if (codeBtn && codeDrawer && closeCodeBtn) {
             codeBtn.addEventListener('click', () => {
-                if (commentDrawer) commentDrawer.classList.remove('open'); // Close comments if open
+                if (commentDrawer) commentDrawer.classList.remove('open'); 
                 codeDrawer.classList.add('open');
             });
             closeCodeBtn.addEventListener('click', () => {
