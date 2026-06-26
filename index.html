@@ -11,8 +11,9 @@
     <div class="sidebar">
         <a href="index.html" style="text-decoration: none;"><h2>CS 🚀</h2></a> 
         <p><a href="index.html"><button title="Home"><i class='bx bx-home-alt'></i></button></a></p>
-        <p><button title="Notifications"><i class='bx bx-bell'></i></button></p> <p><button title="DMs"><i class='bx bx-message-rounded-detail'></i></button></p>
-        <p><button title="Forums"><i class='bx bx-git-repo-forked'></i></button></p>
+        <p><button title="Notifications"><i class='bx bx-bell'></i></button></p>
+        <p><button title="DMs"><i class='bx bx-message-rounded-detail'></i></button></p>
+        <p><a href="forums.html"><button title="Forums"><i class='bx bx-git-repo-forked'></i></button></a></p>
         <p><a href="reels.html"><button title="Reels"><i class='bx bx-video'></i></button></a></p>
         <p><a href="profile.html"><button title="Profile"><i class='bx bx-user-circle'></i></button></a></p>
     </div>
@@ -21,12 +22,7 @@
         <div class="top-ribbon">
             <h1>Good Morning, Vincent!</h1>
             <div class="ribbon-actions">
-                <a href="create-post.html" style="text-decoration: none;">
-                    <button class="btn-primary" title="New Post"><i class='bx bx-plus'></i></button>
-                </a>
-                <a href="reels.html" style="text-decoration: none;">
-                    <button class="btn-secondary" title="New Reel"><i class='bx bx-video'></i></button>
-                </a>
+                <button class="btn-primary" id="openCreationChoiceBtn" title="New Creation"><i class='bx bx-plus'></i></button>
                 
                 <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
                     <input type="text" placeholder="Search tags...">
@@ -39,7 +35,9 @@
             
             <div class="post-card">
                 <div class="post-header">
-                    <button class="profile-link" title="View Profile"><i class='bx bx-user-circle'></i></button>
+                    <a href="profile.html" class="profile-link" style="display:flex; align-items:center; justify-content:center; padding:0; border:none; background:none; cursor:pointer; color:#0077ff; font-size:32px; text-decoration:none;">
+                        <i class='bx bx-user-circle'></i>
+                    </a>
                     <h3 class="post-title">Help c++</h3>
                 </div>
                 <div class="post-body">
@@ -68,7 +66,9 @@
 
             <div class="post-card">
                 <div class="post-header">
-                    <button class="profile-link" title="View Profile"><i class='bx bx-user-circle'></i></button>
+                    <a href="profile.html" class="profile-link" style="display:flex; align-items:center; justify-content:center; padding:0; border:none; background:none; cursor:pointer; color:#0077ff; font-size:32px; text-decoration:none;">
+                        <i class='bx bx-user-circle'></i>
+                    </a>
                     <h3 class="post-title">Python IndentationError?</h3>
                 </div>
                 <div class="post-body">
@@ -95,6 +95,22 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+
+    <div id="createChoiceModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 320px; text-align: center;">
+            <h3 style="margin-top:0; color:#0077ff;">Create a New Snap 🚀</h3>
+            <p style="color:#8e8e93; font-size:13px; margin-bottom:20px;">What format are you sharing today?</p>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <a href="create-post.html" style="text-decoration: none;">
+                    <button class="submit-post-btn" style="width:100%; margin:0; padding:12px; font-size:14px;">📝 Post / Debug Thread</button>
+                </a>
+                <a href="create-reel.html" style="text-decoration: none;">
+                    <button class="submit-post-btn" style="width:100%; margin:0; padding:12px; font-size:14px; background-color:#0077ff; color:white; border:none;">🎬 Vertical Dev Reel</button>
+                </a>
+                <button id="closeChoiceModalBtn" class="submit-post-btn" style="background-color: #1a1a1e; border: 1px solid #2a2a30; color: #8e8e93; margin:0; padding:10px;">Cancel</button>
+            </div>
         </div>
     </div>
 
