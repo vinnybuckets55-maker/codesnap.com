@@ -479,7 +479,7 @@ body {
     object-fit: cover;
 }
 /* ==========================================================================
-   11. CODE-SNAP REELS FEED ARCHITECTURE (Reinforced)
+   11. CODE-SNAP REELS FEED ARCHITECTURE (Reinforced Container)
    ========================================================================== */
 .reels-scroll-wrapper {
     display: flex !important;
@@ -490,12 +490,11 @@ body {
     width: 100%;
 }
 
-/* Smartphone screen container box format */
 .reel-viewport-card {
     position: relative !important;
     width: 360px;
     height: 640px;
-    background-color: #0c0c0e;
+    background-color: #0c0c0e !important;
     border: 1px solid #2a2a30;
     border-radius: 16px;
     overflow: hidden;
@@ -505,7 +504,6 @@ body {
     justify-content: center;
 }
 
-/* Simulated video background placeholder look */
 .reel-video-placeholder {
     width: 100%;
     height: 100%;
@@ -524,7 +522,6 @@ body {
     text-shadow: 0 0 20px rgba(0, 119, 255, 0.4);
 }
 
-/* Left Bottom User Context Overlay metadata */
 .reel-bottom-meta {
     position: absolute;
     bottom: 0;
@@ -552,7 +549,6 @@ body {
     line-height: 1.4;
 }
 
-/* Right Side Vertical floating interaction actions panel */
 .reel-sidebar-actions {
     position: absolute;
     bottom: 30px;
@@ -606,7 +602,7 @@ body {
 }
 
 /* ==========================================================================
-   12. REELS SMARTPHONE COMMENT DRAWER LAYOUT (Fixed & Shielded)
+   12. REELS COMMENT DRAWER LAYOUT (Solid & PFP Formatted)
    ========================================================================== */
 .reel-comment-drawer {
     position: absolute !important;
@@ -615,18 +611,16 @@ body {
     right: 0 !important;
     width: 100% !important;
     height: 65% !important;
-    background-color: #16161a !important;
+    background-color: #16161a !important; /* 100% solid color background */
     border-top: 1px solid #2a2a30 !important;
     border-radius: 16px 16px 0 0 !important;
-    z-index: 999 !important;
+    z-index: 500 !important; /* Forces it over metadata and buttons */
     display: none; 
     flex-direction: column;
     padding: 15px !important;
     box-sizing: border-box !important;
-    margin: 0 !important;
 }
 
-/* Triggers flex parameters safely without layout bleeding */
 .reel-comment-drawer.open {
     display: flex !important;
 }
@@ -648,11 +642,6 @@ body {
     font-size: 18px !important;
     cursor: pointer !important;
     padding: 0 !important;
-    transition: 0.2s;
-}
-
-.reel-comment-close:hover {
-    color: #ffffff !important;
 }
 
 .reel-comments-list {
@@ -660,20 +649,58 @@ body {
     overflow-y: auto !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 8px !important;
+    gap: 10px !important;
     margin-bottom: 12px !important;
-    padding-right: 4px !important;
 }
 
+/* Custom layout format for PFP comment rows */
 .reel-comment-item {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
     background-color: #222227 !important;
     border: 1px solid #2a2a30 !important;
-    padding: 8px 12px !important;
-    border-radius: 8px !important;
+    padding: 10px !important;
+    border-radius: 10px !important;
+}
+
+.reel-comment-pfp-link {
+    display: block !important;
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+    flex-shrink: 0 !important;
+}
+
+.reel-comment-pfp-link img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+.reel-comment-pfp-link i {
+    font-size: 28px !important;
+    color: #8e8e93 !important;
+}
+
+.reel-comment-text-block {
+    flex: 1 !important;
+    text-align: left !important;
+}
+
+.reel-comment-text-block strong {
+    display: block !important;
+    font-size: 12px !important;
+    color: #0077ff !important;
+    margin-bottom: 2px !important;
+}
+
+.reel-comment-text-block p {
+    margin: 0 !important;
     font-size: 12px !important;
     color: #e4e4e6 !important;
     line-height: 1.4 !important;
-    text-align: left !important;
 }
 
 .reel-comment-input-row {
@@ -704,15 +731,15 @@ body {
     cursor: pointer !important;
     font-weight: bold !important;
     font-size: 12px !important;
-    transition: 0.2s;
 }
 
 .reel-comment-submit-btn:hover {
     background-color: #0077ff !important;
     color: #ffffff !important;
 }
+
 /* ==========================================================================
-   13. REELS CODE SNIPPET DRAWER LAYOUT
+   13. REELS CODE SNIPPET DRAWER LAYOUT (Solid & Self-Contained)
    ========================================================================== */
 .reel-code-drawer {
     position: absolute !important;
@@ -720,11 +747,11 @@ body {
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
-    height: 70% !important; /* Slightly taller than comments to fit code blocks */
-    background-color: #111114 !important;
+    height: 70% !important;
+    background-color: #111114 !important; /* 100% solid dark area background */
     border-top: 1px solid #2a2a30 !important;
     border-radius: 16px 16px 0 0 !important;
-    z-index: 100 !important; /* Sits right on top */
+    z-index: 600 !important; /* Layers directly over everything else when active */
     display: none;
     flex-direction: column;
     padding: 15px !important;
@@ -753,7 +780,6 @@ body {
     display: flex !important;
     align-items: center !important;
     gap: 4px !important;
-    transition: 0.2s;
 }
 
 .reel-code-copy-btn:hover {
