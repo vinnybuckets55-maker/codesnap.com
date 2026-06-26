@@ -1,4 +1,3 @@
-// --- 1. STATE CONFIGURATION FIELDS ---
 let editModeActive = false;
 let hasImageLoaded = false;
 let targetedRedirectUrl = ""; 
@@ -20,7 +19,6 @@ const pfpOptionsModal = document.getElementById('pfpOptionsModal');
 const pfpConfirmRemovalModal = document.getElementById('pfpConfirmRemovalModal');
 const dirtyWarningModal = document.getElementById('dirtyWarningModal');
 
-// --- INTERACTIVE SUB-ELEMENT INITIALIZERS ---
 function setupUpvoteButton(button) {
     button.addEventListener('click', () => {
         const countSpan = button.querySelector('.upvote-count');
@@ -102,7 +100,6 @@ function setupDebugPanel(card, postTitleForDatabase = null) {
     }
 }
 
-// --- 2. LOAD PROFILE AVATAR & METADATA RAW ---
 const savedBio = localStorage.getItem(BIO_STORAGE_KEY);
 if (savedBio) bioTxtBox.textContent = savedBio;
 
@@ -114,12 +111,11 @@ if (savedPfp) {
     hasImageLoaded = true;
 }
 
-// --- 3. DYNAMIC TARGET LOADING FOR PROFILE POSTS TAB ---
 const panePosts = document.getElementById('panePosts');
 const savedPosts = JSON.parse(localStorage.getItem('codesnap_local_db')) || [];
 
 if (panePosts && savedPosts.length > 0) {
-    panePosts.innerHTML = ""; // Snaps placeholder text completely out of existence!
+    panePosts.innerHTML = ""; 
 
     let userPfpHTML = `<i class='bx bx-user-circle'></i>`;
     if (savedPfp) {
@@ -198,7 +194,6 @@ if (panePosts && savedPosts.length > 0) {
     });
 }
 
-// --- 4. DIRTY CHECK SYSTEM ---
 function detectUnsavedChanges() {
     if (!editModeActive) return false;
     return bioInputField.value !== bioTxtBox.textContent;
@@ -225,7 +220,6 @@ document.getElementById('dirtySaveBtn').addEventListener('click', () => {
     window.location.href = targetedRedirectUrl;
 });
 
-// --- 5. EDIT MODE TOGGLE ---
 editProfileBtn.addEventListener('click', () => {
     editModeActive = !editModeActive;
 
@@ -248,7 +242,6 @@ editProfileBtn.addEventListener('click', () => {
     }
 });
 
-// --- 6. FILE CHIPS MANAGEMENT & SELECTION SYSTEM ---
 pfpDivFrame.addEventListener('click', () => {
     if (!editModeActive) return; 
     if (!hasImageLoaded) {
@@ -298,7 +291,6 @@ document.getElementById('saveCropBtn').addEventListener('click', () => {
     window.location.reload();
 });
 
-// --- 7. TAB CONTROL SWITCHES SYSTEM ---
 document.querySelectorAll('.profile-tab-btn').forEach(tabButton => {
     tabButton.addEventListener('click', () => {
         document.querySelectorAll('.profile-tab-btn').forEach(btn => btn.classList.remove('active'));
