@@ -4,35 +4,79 @@
     <title>CodeSnap - Reels</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
+    <script src="reels.js" defer></script>
 </head>
 <body>
 
     <div class="sidebar">
         <a href="index.html" style="text-decoration: none;"><h2>CS 🚀</h2></a> 
-        
         <p><a href="index.html"><button title="Home"><i class='bx bx-home-alt'></i></button></a></p>
+        <p><button title="Notifications"><i class='bx bx-bell'></i></button></p>
         <p><button title="DMs"><i class='bx bx-message-rounded-detail'></i></button></p>
         <p><button title="Forums"><i class='bx bx-git-repo-forked'></i></button></p>
-        <p><button title="Reels"><i class='bx bx-video'></i></button></p>
-        <p><button title="Profile"><i class='bx bx-user-circle'></i></button></p>
+        <p><a href="reels.html"><button title="Reels"><i class='bx bx-video'></i></button></a></p>
+        <p><a href="profile.html"><button title="Profile"><i class='bx bx-user-circle'></i></button></a></p>
     </div>
 
     <div class="main-content">
         <div class="top-ribbon">
-            <h1>CodeSnap Reels 🎬</h1>
-            <a href="index.html" style="text-decoration: none;">
-                <button class="btn-primary" title="Go Home" style="width: auto; height: 40px; border-radius: 20px; padding: 0 15px; font-size: 14px;">
-                    Back to Feed
-                </button>
-            </a>
+            <h1>CodeSnaps Dev Shorts 🎬</h1>
         </div>
 
-        <div class="feed-posts">
-            <div class="post-card" style="text-align: center; padding: 50px 20px;">
-                <i class='bx bx-film' style="font-size: 50px; color: #0077ff; margin-bottom: 15px;"></i>
-                <h2>Reel Camera Coming Soon</h2>
-                <p style="color: #8e8e93;">This is where your short-form developer videos and debugging clips will live!</p>
+        <div class="reels-scroll-wrapper">
+            
+            <div class="reel-viewport-card">
+                <div class="reel-video-placeholder">
+                    <i class='bx bx-code-block video-glow'></i>
+                    <span style="font-family: monospace; font-size:11px; color:#3a3a40;">[ video-stream: matrix_effect.cpp ]</span>
+                </div>
+
+                <div class="reel-bottom-meta">
+                    <h3><i class='bx bxs-user-circle' style="color:#0077ff;"></i> @dev_dan</h3>
+                    <p>Writing a falling matrix numbers screen saver inside the C++ terminal box under 60 lines of engine code! 💻🔥</p>
+                </div>
+
+                <div class="reel-sidebar-actions">
+                    <div class="reel-action-node">
+                        <button class="reel-like-btn" title="Like"><i class='bx bx-heart'></i></button>
+                        <span class="like-counter">1.4k</span>
+                    </div>
+                    <div class="reel-action-node">
+                        <button title="View Snippet/Debug"><i class='bx bx-code-alt'></i></button>
+                        <span style="color:#0077ff; font-size:11px; font-weight:bold;">CODE</span>
+                    </div>
+                    <div class="reel-action-node">
+                        <button title="Share Snap"><i class='bx bx-share-alt'></i></button>
+                    </div>
+                </div>
             </div>
+
+            <div class="reel-viewport-card">
+                <div class="reel-video-placeholder">
+                    <i class='bx bx-game video-glow' style="color:#ffcc00;"></i>
+                    <span style="font-family: monospace; font-size:11px; color:#3a3a40;">[ video-stream: unity_movement.cs ]</span>
+                </div>
+
+                <div class="reel-bottom-meta">
+                    <h3><i class='bx bxs-user-circle' style="color:#ffcc00;"></i> @unity_girl</h3>
+                    <p>Fixed the double jump gravity vector calculation glitch inside the 2D platformer template system physics! 🎮✨</p>
+                </div>
+
+                <div class="reel-sidebar-actions">
+                    <div class="reel-action-node">
+                        <button class="reel-like-btn" title="Like"><i class='bx bx-heart'></i></button>
+                        <span class="like-counter">834</span>
+                    </div>
+                    <div class="reel-action-node">
+                        <button title="View Snippet/Debug"><i class='bx bx-code-alt'></i></button>
+                        <span style="color:#0077ff; font-size:11px; font-weight:bold;">CODE</span>
+                    </div>
+                    <div class="reel-action-node">
+                        <button title="Share Snap"><i class='bx bx-share-alt'></i></button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
