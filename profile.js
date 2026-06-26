@@ -3,11 +3,9 @@ let editModeActive = false;
 let hasImageLoaded = false;
 let targetedRedirectUrl = ""; 
 
-// Permanent Storage Key Tags
 const BIO_STORAGE_KEY = "codesnap_user_bio";
 const PFP_STORAGE_KEY = "codesnap_user_pfp";
 
-// DOM Selector Registry
 const editProfileBtn = document.getElementById('editProfileBtn');
 const bioTxtBox = document.getElementById('bioTxtBox');
 const bioInputField = document.getElementById('bioInputField');
@@ -16,14 +14,13 @@ const pfpFileLoader = document.getElementById('pfpFileLoader');
 const userPfpDisplay = document.getElementById('userPfpDisplay');
 const pfpPlaceholderImg = document.getElementById('pfpPlaceholderImg');
 
-// Modal Overlays Registry
 const cropperModal = document.getElementById('cropperModal');
 const cropperSourcePreview = document.getElementById('cropperSourcePreview');
 const pfpOptionsModal = document.getElementById('pfpOptionsModal');
 const pfpConfirmRemovalModal = document.getElementById('pfpConfirmRemovalModal');
 const dirtyWarningModal = document.getElementById('dirtyWarningModal');
 
-// --- Helper Engines for Profile Tab Posts ---
+// --- INTERACTIVE SUB-ELEMENT INITIALIZERS ---
 function setupUpvoteButton(button) {
     button.addEventListener('click', () => {
         const countSpan = button.querySelector('.upvote-count');
@@ -105,113 +102,108 @@ function setupDebugPanel(card, postTitleForDatabase = null) {
     }
 }
 
-// --- 2. RETRIEVE RECOVERY RETENTION SEED DATA ---
-window.addEventListener('DOMContentLoaded', () => {
-    const savedBio = localStorage.getItem(BIO_STORAGE_KEY);
-    if (savedBio) bioTxtBox.textContent = savedBio;
+// --- 2. LOAD PROFILE AVATAR & METADATA RAW ---
+const savedBio = localStorage.getItem(BIO_STORAGE_KEY);
+if (savedBio) bioTxtBox.textContent = savedBio;
 
-    const savedPfp = localStorage.getItem(PFP_STORAGE_KEY);
-    if (savedPfp) {
-        userPfpDisplay.src = savedPfp;
-        userPfpDisplay.style.display = 'block';
-        pfpPlaceholderImg.style.display = 'none';
-        hasImageLoaded = true;
-    }
-
-    // --- DYNAMICALLY RENDER USER POSTS ON THE PROFILE TAB ---
-    const panePosts = document.getElementById('panePosts');
-    const savedPosts = JSON.parse(localStorage.getItem('codesnap_local_db')) || [];
-
-    if (panePosts && savedPosts.length > 0) {
-        panePosts.innerHTML = ""; // Clear out the placeholder "No posts" box!
-
-        let userPfpHTML = `<i class='bx bx-user-circle'></i>`;
-        if (savedPfp) {
-            userPfpHTML = `<img src="${savedPfp}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">`;
-        }
-
-        savedPosts.forEach(post => {
-            let tagsHTML = '';
-            if (post.tags && post.tags.length > 0) {
-                post.tags.forEach(singleTag => {
-                    tagsHTML += `<span class="tag">${singleTag}</span>`;
-                });
-            } else {
-                tagsHTML = `<span class="tag">general</span>`;
-            }
-
-            let codeSectionHTML = '';
-            if (post.code && post.code !== '') {
-                codeSectionHTML = `
-                    <div class="code-editor-container" style="background-color: #111114; border: 1px solid #2a2a30; border-radius: 8px; margin: 12px 0; position: relative; text-align: left;">
-                        <div style="display:flex; justify-content:space-between; align-items:center; background-color:#16161a; padding: 6px 12px; border-bottom:1px solid #2a2a30; border-radius: 8px 8px 0 0;">
-                            <span style="font-family:monospace; font-size:12px; color:#8e8e93;">source-file</span>
-                            <button class="copy-code-btn" style="background:none; border:1px solid #2a2a30; color:#8e8e93; font-size:11px; padding:3px 8px; border-radius:4px; cursor:pointer; display:flex; align-items:center; gap:4px;"><i class='bx bx-copy'></i> Copy</button>
-                        </div>
-                        <pre style="margin:0; padding:12px; overflow-x:auto;"><code style="font-family:monospace; font-size:13px; color:#a9b7c6; white-space:pre;">${post.code}</code></pre>
-                    </div>
-                `;
-            }
-
-            let repliesHTML = '';
-            if (post.replies && post.replies.length > 0) {
-                post.replies.forEach(rep => {
-                    repliesHTML += `<div class="reply-item" style="text-align: left;"><strong>@you:</strong> ${rep}</div>`;
-                });
-            }
-
-            const customPostCard = document.createElement('div');
-            customPostCard.className = 'post-card';
-            customPostCard.style.marginBottom = "20px";
-            customPostCard.innerHTML = `
-                <div class="post-header" style="text-align: left;">
-                    <button class="profile-link" title="View Profile" style="display:flex; align-items:center; justify-content:center; padding:0; border:none; background:none; cursor:pointer; color:#0077ff; font-size:32px;">
-                        ${userPfpHTML}
-                    </button>
-                    <h3 class="post-title">${post.title}</h3>
-                </div>
-                <div class="post-body" style="text-align: left;">
-                    <p>${post.body}</p>
-                    ${codeSectionHTML} 
-                </div>
-                <div class="post-footer">
-                    <div class="tags-container">
-                        ${tagsHTML}
-                    </div>
-                    <div class="post-actions">
-                        <button class="upvote-btn" title="Upvote"><i class='bx bx-upvote'></i> <span class="upvote-count">0</span></button>
-                        <button class="debug-btn" title="Reply/Debug"><i class='bx bx-code-alt'></i></button>
-                    </div>
-                </div>
-                <div class="debug-panel">
-                    <div class="replies-list">
-                        ${repliesHTML}
-                    </div>
-                    <div class="reply-input-row">
-                        <input type="text" placeholder="Suggest a debug fix...">
-                        <button class="submit-reply-btn">Submit Fix</button>
-                    </div>
-                </div>
-            `;
-            panePosts.prepend(customPostCard);
-
-            const newUpvoteBtn = customPostCard.querySelector('.upvote-btn');
-            setupUpvoteButton(newUpvoteBtn);
-            if (post.code && post.code !== '') setupCopyButton(customPostCard);
-            setupDebugPanel(customPostCard, post.title);
-        });
-    }
-});
-
-// Helper check function to find changes
-function detectUnsavedChanges() {
-    if (!editModeActive) return false;
-    const currentTextInInput = bioInputField.value;
-    const stableTextInBox = bioTxtBox.textContent;
-    return currentTextInInput !== stableTextInBox;
+const savedPfp = localStorage.getItem(PFP_STORAGE_KEY);
+if (savedPfp) {
+    userPfpDisplay.src = savedPfp;
+    userPfpDisplay.style.display = 'block';
+    pfpPlaceholderImg.style.display = 'none';
+    hasImageLoaded = true;
 }
 
-// --- 3. DIRTY CHECK BAR NAVIGATION EXCLUSIONS SYSTEM ---
+// --- 3. DYNAMIC TARGET LOADING FOR PROFILE POSTS TAB ---
+const panePosts = document.getElementById('panePosts');
+const savedPosts = JSON.parse(localStorage.getItem('codesnap_local_db')) || [];
+
+if (panePosts && savedPosts.length > 0) {
+    panePosts.innerHTML = ""; // Snaps placeholder text completely out of existence!
+
+    let userPfpHTML = `<i class='bx bx-user-circle'></i>`;
+    if (savedPfp) {
+        userPfpHTML = `<img src="${savedPfp}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">`;
+    }
+
+    savedPosts.forEach(post => {
+        let tagsHTML = '';
+        if (post.tags && post.tags.length > 0) {
+            post.tags.forEach(singleTag => {
+                tagsHTML += `<span class="tag">${singleTag}</span>`;
+            });
+        } else {
+            tagsHTML = `<span class="tag">general</span>`;
+        }
+
+        let codeSectionHTML = '';
+        if (post.code && post.code !== '') {
+            codeSectionHTML = `
+                <div class="code-editor-container" style="background-color: #111114; border: 1px solid #2a2a30; border-radius: 8px; margin: 12px 0; position: relative; text-align: left;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; background-color:#16161a; padding: 6px 12px; border-bottom:1px solid #2a2a30; border-radius: 8px 8px 0 0;">
+                        <span style="font-family:monospace; font-size:12px; color:#8e8e93;">source-file</span>
+                        <button class="copy-code-btn" style="background:none; border:1px solid #2a2a30; color:#8e8e93; font-size:11px; padding:3px 8px; border-radius:4px; cursor:pointer; display:flex; align-items:center; gap:4px;"><i class='bx bx-copy'></i> Copy</button>
+                    </div>
+                    <pre style="margin:0; padding:12px; overflow-x:auto;"><code style="font-family:monospace; font-size:13px; color:#a9b7c6; white-space:pre;">${post.code}</code></pre>
+                </div>
+            `;
+        }
+
+        let repliesHTML = '';
+        if (post.replies && post.replies.length > 0) {
+            post.replies.forEach(rep => {
+                repliesHTML += `<div class="reply-item" style="text-align: left;"><strong>@you:</strong> ${rep}</div>`;
+            });
+        }
+
+        const customPostCard = document.createElement('div');
+        customPostCard.className = 'post-card';
+        customPostCard.style.marginBottom = "20px";
+        customPostCard.innerHTML = `
+            <div class="post-header" style="text-align: left;">
+                <a href="profile.html" class="profile-link" title="View Profile" style="display:flex; align-items:center; justify-content:center; padding:0; border:none; background:none; cursor:pointer; color:#0077ff; font-size:32px; text-decoration:none;">
+                    ${userPfpHTML}
+                </a>
+                <h3 class="post-title">${post.title}</h3>
+            </div>
+            <div class="post-body" style="text-align: left;">
+                <p>${post.body}</p>
+                ${codeSectionHTML} 
+            </div>
+            <div class="post-footer">
+                <div class="tags-container">
+                    ${tagsHTML}
+                </div>
+                <div class="post-actions">
+                    <button class="upvote-btn" title="Upvote"><i class='bx bx-upvote'></i> <span class="upvote-count">0</span></button>
+                    <button class="debug-btn" title="Reply/Debug"><i class='bx bx-code-alt'></i></button>
+                </div>
+            </div>
+            <div class="debug-panel">
+                <div class="replies-list">
+                    ${repliesHTML}
+                </div>
+                <div class="reply-input-row">
+                    <input type="text" placeholder="Suggest a debug fix...">
+                    <button class="submit-reply-btn">Submit Fix</button>
+                </div>
+            </div>
+        `;
+        panePosts.prepend(customPostCard);
+
+        const newUpvoteBtn = customPostCard.querySelector('.upvote-btn');
+        setupUpvoteButton(newUpvoteBtn);
+        if (post.code && post.code !== '') setupCopyButton(customPostCard);
+        setupDebugPanel(customPostCard, post.title);
+    });
+}
+
+// --- 4. DIRTY CHECK SYSTEM ---
+function detectUnsavedChanges() {
+    if (!editModeActive) return false;
+    return bioInputField.value !== bioTxtBox.textContent;
+}
+
 document.querySelectorAll('.sidebar a').forEach(anchorLink => {
     anchorLink.addEventListener('click', (event) => {
         if (detectUnsavedChanges()) {
@@ -233,14 +225,13 @@ document.getElementById('dirtySaveBtn').addEventListener('click', () => {
     window.location.href = targetedRedirectUrl;
 });
 
-// --- 4. TOGGLE ACTION RUNNERS FOR WORKSPACE EDIT ---
+// --- 5. EDIT MODE TOGGLE ---
 editProfileBtn.addEventListener('click', () => {
     editModeActive = !editModeActive;
 
     if (editModeActive) {
         editProfileBtn.innerHTML = `<i class='bx bx-check' style='color:#00ff88;'></i>`;
         editProfileBtn.style.borderColor = "#00ff88";
-        
         bioInputField.value = bioTxtBox.textContent;
         bioTxtBox.style.display = 'none';
         bioInputField.style.display = 'block';
@@ -248,23 +239,18 @@ editProfileBtn.addEventListener('click', () => {
     } else {
         editProfileBtn.innerHTML = `<i class='bx bx-pencil'></i>`;
         editProfileBtn.style.borderColor = "#2a2a30";
-        
         bioTxtBox.textContent = bioInputField.value.trim();
         localStorage.setItem(BIO_STORAGE_KEY, bioTxtBox.textContent);
-        
         bioTxtBox.style.display = 'block';
         bioInputField.style.display = 'none';
         pfpDivFrame.classList.remove('edit-active');
-        
-        // Quick reload to sync avatar changes
         window.location.reload();
     }
 });
 
-// --- 5. FILE SYSTEM LOADER STREAM & WORKSPACE CROP MATRIX ---
+// --- 6. FILE CHIPS MANAGEMENT & SELECTION SYSTEM ---
 pfpDivFrame.addEventListener('click', () => {
     if (!editModeActive) return; 
-
     if (!hasImageLoaded) {
         pfpFileLoader.click();
     } else {
@@ -297,10 +283,6 @@ document.getElementById('optRemoveBtn').addEventListener('click', () => {
 document.getElementById('denyRemovalBtn').addEventListener('click', () => pfpConfirmRemovalModal.classList.remove('open'));
 document.getElementById('assertRemovalBtn').addEventListener('click', () => {
     localStorage.removeItem(PFP_STORAGE_KEY);
-    userPfpDisplay.src = "";
-    userPfpDisplay.style.display = 'none';
-    pfpPlaceholderImg.style.display = 'block';
-    hasImageLoaded = false;
     pfpConfirmRemovalModal.classList.remove('open');
     window.location.reload();
 });
@@ -311,19 +293,12 @@ document.getElementById('cancelCropBtn').addEventListener('click', () => {
 });
 
 document.getElementById('saveCropBtn').addEventListener('click', () => {
-    const rawCroppedStringUrl = cropperSourcePreview.src;
-    localStorage.setItem(PFP_STORAGE_KEY, rawCroppedStringUrl);
-    
-    userPfpDisplay.src = rawCroppedStringUrl;
-    userPfpDisplay.style.display = 'block';
-    pfpPlaceholderImg.style.display = 'none';
-    hasImageLoaded = true;
-    
+    localStorage.setItem(PFP_STORAGE_KEY, cropperSourcePreview.src);
     cropperModal.classList.remove('open');
-    window.location.reload(); // Hard sync
+    window.location.reload();
 });
 
-// --- 6. EXPANDABLE SECTION SUB-TAB CONTROLLERS ---
+// --- 7. TAB CONTROL SWITCHES SYSTEM ---
 document.querySelectorAll('.profile-tab-btn').forEach(tabButton => {
     tabButton.addEventListener('click', () => {
         document.querySelectorAll('.profile-tab-btn').forEach(btn => btn.classList.remove('active'));
