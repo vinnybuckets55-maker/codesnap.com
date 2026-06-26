@@ -123,6 +123,7 @@ body {
 .tags-container {
     display: flex;
     gap: 8px;
+    flex-wrap: wrap;
 }
 
 .tag {
@@ -478,6 +479,7 @@ body {
     max-height: 100%;
     object-fit: cover;
 }
+
 /* ==========================================================================
    11. CODE-SNAP REELS FEED ARCHITECTURE (Reinforced Container)
    ========================================================================== */
@@ -611,10 +613,10 @@ body {
     right: 0 !important;
     width: 100% !important;
     height: 65% !important;
-    background-color: #16161a !important; /* 100% solid color background */
+    background-color: #16161a !important;
     border-top: 1px solid #2a2a30 !important;
     border-radius: 16px 16px 0 0 !important;
-    z-index: 500 !important; /* Forces it over metadata and buttons */
+    z-index: 500 !important;
     display: none; 
     flex-direction: column;
     padding: 15px !important;
@@ -653,7 +655,6 @@ body {
     margin-bottom: 12px !important;
 }
 
-/* Custom layout format for PFP comment rows */
 .reel-comment-item {
     display: flex !important;
     align-items: flex-start !important;
@@ -748,10 +749,10 @@ body {
     right: 0 !important;
     width: 100% !important;
     height: 70% !important;
-    background-color: #111114 !important; /* 100% solid dark area background */
+    background-color: #111114 !important;
     border-top: 1px solid #2a2a30 !important;
     border-radius: 16px 16px 0 0 !important;
-    z-index: 600 !important; /* Layers directly over everything else when active */
+    z-index: 600 !important;
     display: none;
     flex-direction: column;
     padding: 15px !important;
