@@ -1,4 +1,3 @@
-// --- REELS INTERACTION CONTROL SYSTEM MATRIX ---
 window.addEventListener('DOMContentLoaded', () => {
     
     // 1. GLOBAL LIKE BUTTON CONTROLLERS
@@ -22,57 +21,78 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. ISOLATED COMMENT DRAWER PROCESSES PER SHORTS VIEWPORT CARD
+    // 2. SELF-CONTAINED INTERACTION SYSTEMS PER VIDEO SHORTS CARD
     const reelCards = document.querySelectorAll('.reel-viewport-card');
     
     reelCards.forEach(card => {
+        // Comment Component Selectors
         const commentBtn = card.querySelector('.reel-comment-btn');
         const commentDrawer = card.querySelector('.reel-comment-drawer');
-        const closeDrawerBtn = card.querySelector('.reel-comment-close');
-        
+        const closeCommentBtn = card.querySelector('.reel-comment-drawer .reel-comment-close');
         const submitCommentBtn = card.querySelector('.reel-comment-submit-btn');
         const commentInput = card.querySelector('.reel-comment-input-row input');
         const commentsList = card.querySelector('.reel-comments-list');
         const commentCounter = card.querySelector('.comment-counter');
 
-        // Toggle visibility triggers
-        if (commentBtn && commentDrawer && closeDrawerBtn) {
+        // NEW: Code Component Selectors
+        const codeBtn = card.querySelector('.reel-code-view-btn');
+        const codeDrawer = card.querySelector('.reel-code-drawer');
+        const closeCodeBtn = card.querySelector('.reel-code-drawer .reel-comment-close');
+        const copyCodeBtn = card.querySelector('.reel-code-copy-btn');
+        const codeElement = card.querySelector('.reel-code-view-area code');
+
+        // --- COMMENTS DRAWER INTERACTION ---
+        if (commentBtn && commentDrawer && closeCommentBtn) {
             commentBtn.addEventListener('click', () => {
+                if (codeDrawer) codeDrawer.classList.remove('open'); // Close code if open
                 commentDrawer.classList.add('open');
             });
-
-            closeDrawerBtn.addEventListener('click', () => {
+            closeCommentBtn.addEventListener('click', () => {
                 commentDrawer.classList.remove('open');
             });
         }
 
-        // Live submission appending runner
         if (submitCommentBtn && commentInput && commentsList) {
             submitCommentBtn.addEventListener('click', () => {
                 const commentText = commentInput.value.trim();
                 if (commentText === "") return;
 
-                // Build text bubble element row
                 const newCommentNode = document.createElement('div');
                 newCommentNode.className = 'reel-comment-item';
                 newCommentNode.innerHTML = `<strong>@you:</strong> ${commentText}`;
                 commentsList.appendChild(newCommentNode);
 
-                // Increment node sidebar digit label count metric text strings
                 if (commentCounter) {
                     let currentCount = parseInt(commentCounter.textContent) || 0;
                     commentCounter.textContent = currentCount + 1;
                 }
-
-                commentInput.value = ""; // Clear input slot text lines
-                commentsList.scrollTop = commentsList.scrollHeight; // Focus scroll row alignment down
+                commentInput.value = "";
+                commentsList.scrollTop = commentsList.scrollHeight;
             });
+        }
 
-            // Let users submit fixes via the Enter key too
-            commentInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    submitCommentBtn.click();
-                }
+        // --- NEW: CODE DRAWER INTERACTION & COPY TRIPPERS ---
+        if (codeBtn && codeDrawer && closeCodeBtn) {
+            codeBtn.addEventListener('click', () => {
+                if (commentDrawer) commentDrawer.classList.remove('open'); // Close comments if open
+                codeDrawer.classList.add('open');
+            });
+            closeCodeBtn.addEventListener('click', () => {
+                codeDrawer.classList.remove('open');
+            });
+        }
+
+        if (copyCodeBtn && codeElement) {
+            copyCodeBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(codeElement.textContent).then(() => {
+                    copyCodeBtn.innerHTML = `<i class='bx bx-check' style='color:#00ff88;'></i> Copied!`;
+                    copyCodeBtn.style.borderColor = "#00ff88";
+                    
+                    setTimeout(() => {
+                        copyCodeBtn.innerHTML = `<i class='bx bx-copy'></i> Copy`;
+                        copyCodeBtn.style.borderColor = "#2a2a30";
+                    }, 2000);
+                });
             });
         }
     });
