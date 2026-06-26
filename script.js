@@ -38,7 +38,7 @@ function setupCopyButton(container) {
     }
 }
 
-// --- 3. NEW: REUSABLE DEBUG COMMENTS PANEL HANDLER ---
+// --- 3. REUSABLE DEBUG COMMENTS PANEL HANDLER ---
 function setupDebugPanel(card, postTitleForDatabase = null) {
     const debugBtn = card.querySelector('.debug-btn');
     const debugPanel = card.querySelector('.debug-panel');
@@ -47,13 +47,12 @@ function setupDebugPanel(card, postTitleForDatabase = null) {
     const repliesList = card.querySelector('.replies-list');
 
     if (debugBtn && debugPanel) {
-        // Toggle Panel Open/Closed when clicking the </> icon
         debugBtn.addEventListener('click', () => {
             debugPanel.classList.toggle('open');
             if (debugPanel.classList.contains('open')) {
-                debugBtn.style.color = "#0077ff"; // Highlight icon blue when open
+                debugBtn.style.color = "#0077ff";
             } else {
-                debugBtn.style.color = "#8e8e93"; // Gray when closed
+                debugBtn.style.color = "#8e8e93";
             }
         });
     }
@@ -63,13 +62,11 @@ function setupDebugPanel(card, postTitleForDatabase = null) {
             const replyText = replyInput.value.trim();
             if (replyText === "") return;
 
-            // Generate comment block element
             const newReplyItem = document.createElement('div');
             newReplyItem.className = 'reply-item';
             newReplyItem.innerHTML = `<strong>@you:</strong> ${replyText}`;
             repliesList.appendChild(newReplyItem);
 
-            // If this is a custom post from LocalStorage, write the reply to memory
             if (postTitleForDatabase) {
                 const savedPosts = JSON.parse(localStorage.getItem('codesnap_local_db')) || [];
                 const updatedPosts = savedPosts.map(p => {
@@ -82,25 +79,30 @@ function setupDebugPanel(card, postTitleForDatabase = null) {
                 localStorage.setItem('codesnap_local_db', JSON.stringify(updatedPosts));
             }
 
-            replyInput.value = ""; // Clear box
-            repliesList.scrollTop = repliesList.scrollHeight; // Auto-scroll down
+            replyInput.value = "";
+            repliesList.scrollTop = repliesList.scrollHeight;
         });
     }
 }
 
-// --- 4. HOMEPAGE STREAM ENGINE ---
+// --- 4. HOMEPAGE FEED BUILDER ---
 const mainFeed = document.getElementById('mainFeed');
 if (mainFeed) {
-    // Turn on upvote and dropdown handlers for default C++ and Python cards
     const defaultCards = mainFeed.querySelectorAll('.post-card');
     defaultCards.forEach(card => {
         const upBtn = card.querySelector('.upvote-btn');
         if (upBtn) setupUpvoteButton(upBtn);
-        setupDebugPanel(card); // Standard panel toggle
+        setupDebugPanel(card);
     });
 
-    // Pull database posts from memory
     const savedPosts = JSON.parse(localStorage.getItem('codesnap_local_db')) || [];
+    
+    // FETCH SAVED PROFILE PICTURE FOR HOME FEED POSTS
+    const savedPfp = localStorage.getItem("codesnap_user_pfp");
+    let userPfpHTML = `<i class='bx bx-user-circle'></i>`;
+    if (savedPfp) {
+        userPfpHTML = `<img src="${savedPfp}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">`;
+    }
 
     savedPosts.forEach(post => {
         let tagsHTML = '';
@@ -125,7 +127,6 @@ if (mainFeed) {
             `;
         }
 
-        // Render previously saved comments if any exist in storage
         let repliesHTML = '';
         if (post.replies && post.replies.length > 0) {
             post.replies.forEach(rep => {
@@ -137,7 +138,9 @@ if (mainFeed) {
         customPostCard.className = 'post-card';
         customPostCard.innerHTML = `
             <div class="post-header">
-                <button class="profile-link" title="View Profile"><i class='bx bx-user-circle'></i></button>
+                <button class="profile-link" title="View Profile" style="display:flex; align-items:center; justify-content:center; padding:0; border:none; background:none; cursor:pointer; color:#0077ff; font-size:32px;">
+                    ${userPfpHTML}
+                </button>
                 <h3 class="post-title">${post.title}</h3>
             </div>
             <div class="post-body">
@@ -165,12 +168,9 @@ if (mainFeed) {
         `;
         mainFeed.prepend(customPostCard);
 
-        // Turn on upvote and copy event actions
         const newUpvoteBtn = customPostCard.querySelector('.upvote-btn');
         setupUpvoteButton(newUpvoteBtn);
         if (post.code && post.code !== '') setupCopyButton(customPostCard);
-
-        // Connect the active comments engine to this post
         setupDebugPanel(customPostCard, post.title);
     });
 
