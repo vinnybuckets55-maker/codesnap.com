@@ -46,7 +46,7 @@
                         <span class="comment-counter">1</span>
                     </div>
                     <div class="reel-action-node">
-                        <button title="View Snippet/Debug"><i class='bx bx-code-alt'></i></button>
+                        <button class="reel-code-view-btn" title="View Snippet/Debug"><i class='bx bx-code-alt'></i></button>
                         <span style="color:#0077ff; font-size:11px; font-weight:bold;">CODE</span>
                     </div>
                     <div class="reel-action-node">
@@ -66,6 +66,27 @@
                         <input type="text" placeholder="Add a comment...">
                         <button class="reel-comment-submit-btn">Send</button>
                     </div>
+                </div>
+
+                <div class="reel-code-drawer">
+                    <div class="reel-code-header">
+                        <span style="font-size:13px; font-weight:bold; color:#8e8e93; font-family:monospace;">matrix_effect.cpp</span>
+                        <button class="reel-code-copy-btn"><i class='bx bx-copy'></i> Copy</button>
+                    </div>
+                    <div class="reel-code-view-area">
+                        <code>#include &lt;iostream&gt;
+#include &lt;unistd.h&gt;
+
+int main() {
+    while(true) {
+        std::cout &lt;&lt; (rand() % 2) &lt;&lt; "  ";
+        if(rand() % 10 == 0) std::cout &lt;&lt; std::endl;
+        usleep(10000);
+    }
+    return 0;
+}</code>
+                    </div>
+                    <button class="reel-comment-close" style="margin-top:10px; width:100%; padding:6px; background:#1a1a1e; border:1px solid #2a2a30; border-radius:6px;">Close Preview</button>
                 </div>
             </div>
 
@@ -90,7 +111,7 @@
                         <span class="comment-counter">0</span>
                     </div>
                     <div class="reel-action-node">
-                        <button title="View Snippet/Debug"><i class='bx bx-code-alt'></i></button>
+                        <button class="reel-code-view-btn" title="View Snippet/Debug"><i class='bx bx-code-alt'></i></button>
                         <span style="color:#0077ff; font-size:11px; font-weight:bold;">CODE</span>
                     </div>
                     <div class="reel-action-node">
@@ -103,12 +124,34 @@
                         <span>Comments</span>
                         <button class="reel-comment-close">✕</button>
                     </div>
-                    <div class="reel-comments-list">
-                        </div>
+                    <div class="reel-comments-list"></div>
                     <div class="reel-comment-input-row">
                         <input type="text" placeholder="Add a comment...">
                         <button class="reel-comment-submit-btn">Send</button>
                     </div>
+                </div>
+
+                <div class="reel-code-drawer">
+                    <div class="reel-code-header">
+                        <span style="font-size:13px; font-weight:bold; color:#8e8e93; font-family:monospace;">unity_movement.cs</span>
+                        <button class="reel-code-copy-btn"><i class='bx bx-copy'></i> Copy</button>
+                    </div>
+                    <div class="reel-code-view-area">
+                        <code>using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour {
+    public float jumpForce = 8f;
+    private int jumpCount = 0;
+
+    void Update() {
+        if (Input.GetButtonDown("Jump") && jumpCount &lt; 2) {
+            GetComponent&lt;Rigidbody2D&gt;().linearVelocity = Vector2.up * jumpForce;
+            jumpCount++;
+        }
+    }
+}</code>
+                    </div>
+                    <button class="reel-comment-close" style="margin-top:10px; width:100%; padding:6px; background:#1a1a1e; border:1px solid #2a2a30; border-radius:6px;">Close Preview</button>
                 </div>
             </div>
 
