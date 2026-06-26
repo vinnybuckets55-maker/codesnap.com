@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CodeSnap - Share Reel</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+    <script src="create-reel.js" defer></script>
+</head>
+<body>
+
+    <div class="sidebar">
+        <a href="index.html" style="text-decoration: none;"><h2>CS 🚀</h2></a> 
+        <p><a href="index.html"><button title="Home"><i class='bx bx-home-alt'></i></button></a></p>
+        <p><button title="Notifications"><i class='bx bx-bell'></i></button></p>
+        <p><button title="DMs"><i class='bx bx-message-rounded-detail'></i></button></p>
+        <p><button title="Forums"><i class='bx bx-git-repo-forked'></i></button></p>
+        <p><a href="reels.html"><button title="Reels"><i class='bx bx-video'></i></button></a></p>
+        <p><a href="profile.html"><button title="Profile"><i class='bx bx-user-circle'></i></button></a></p>
+    </div>
+
+    <div class="main-content">
+        <div class="top-ribbon">
+            <h1>Upload a Dev Short 🎬</h1>
+            <a href="index.html" style="text-decoration: none;">
+                <button class="btn-primary" style="width: auto; height: 40px; border-radius: 20px; padding: 0 15px; font-size: 14px;">Cancel</button>
+            </a>
+        </div>
+
+        <div class="feed-posts">
+            <div class="post-card" style="display: flex; flex-direction: column; gap: 15px;">
+                <h3 style="margin: 0; color: #0077ff;">Clip Showcase</h3>
+                
+                <textarea id="reelCaption" placeholder="Write a description for your reel short... (e.g., Optimizing spatial partition mapping equations!)" style="background-color: #1a1a1e; border: 1px solid #2a2a30; color: #ffffff; padding: 12px; border-radius: 8px; outline: none; font-size: 14px; height: 80px; resize: none; font-family: sans-serif;"></textarea>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h4 style="margin: 0; color: #8e8e93;">Select Video Resource</h4>
+                    <input type="file" id="reelVideoPicker" accept="video/mp4, video/mov, video/ogg, video/webm" style="display: none;">
+                    <button type="button" id="triggerVideoPickerBtn" style="background-color: #1a1a1e; border: 1px solid #2a2a30; color: #ffffff; padding: 6px 12px; border-radius: 6px; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                        <i class='bx bx-movie-vertical' style="color: #0077ff; font-size: 16px;"></i> Open File Explorer
+                    </button>
+                </div>
+
+                <div class="video-preview-frame" id="previewFrameContainer">
+                    <div id="previewPlaceholder" style="color:#44444a; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:8px;">
+                        <i class='bx bx-cloud-upload' style='font-size:32px; color:#2a2a30;'></i>
+                        <span>No video loaded yet</span>
+                    </div>
+                    <video id="localReelPreview" controls style="display:none;"></video>
+                </div>
+
+                <button id="publishReelBtn" class="submit-post-btn" style="background-color: #0077ff; color: #ffffff; border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 5px;">
+                    Publish Reel Live 🚀
+                </button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
