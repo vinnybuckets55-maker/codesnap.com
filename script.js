@@ -97,7 +97,6 @@ if (mainFeed) {
 
     const savedPosts = JSON.parse(localStorage.getItem('codesnap_local_db')) || [];
     
-    // FETCH SAVED PROFILE PICTURE FOR HOME FEED POSTS
     const savedPfp = localStorage.getItem("codesnap_user_pfp");
     let userPfpHTML = `<i class='bx bx-user-circle'></i>`;
     if (savedPfp) {
@@ -138,9 +137,9 @@ if (mainFeed) {
         customPostCard.className = 'post-card';
         customPostCard.innerHTML = `
             <div class="post-header">
-                <button class="profile-link" title="View Profile" style="display:flex; align-items:center; justify-content:center; padding:0; border:none; background:none; cursor:pointer; color:#0077ff; font-size:32px;">
+                <a href="profile.html" class="profile-link" title="View Profile" style="display:flex; align-items:center; justify-content:center; padding:0; border:none; background:none; cursor:pointer; color:#0077ff; font-size:32px; text-decoration:none;">
                     ${userPfpHTML}
-                </button>
+                </a>
                 <h3 class="post-title">${post.title}</h3>
             </div>
             <div class="post-body">
