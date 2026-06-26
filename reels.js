@@ -1,6 +1,5 @@
 window.addEventListener('DOMContentLoaded', () => {
     
-    // 1. GLOBAL LIKE BUTTON CONTROLLERS
     const likeButtons = document.querySelectorAll('.reel-like-btn');
     likeButtons.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -21,14 +20,12 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // FETCH LOGGED IN DATA STORES AT STARTUP
     const savedPfp = localStorage.getItem("codesnap_user_pfp");
     let userAvatarHTML = `<i class='bx bxs-user-circle' style='font-size:28px; color:#0077ff;'></i>`;
     if (savedPfp) {
         userAvatarHTML = `<img src="${savedPfp}" style="width:100%; height:100%; object-fit:cover;">`;
     }
 
-    // 2. SELF-CONTAINED INTERACTION SYSTEMS PER VIDEO SHORTS CARD
     const reelCards = document.querySelectorAll('.reel-viewport-card');
     
     reelCards.forEach(card => {
@@ -46,7 +43,6 @@ window.addEventListener('DOMContentLoaded', () => {
         const copyCodeBtn = card.querySelector('.reel-code-copy-btn');
         const codeElement = card.querySelector('.reel-code-view-area code');
 
-        // --- COMMENTS DRAWER INTERACTION ---
         if (commentBtn && commentDrawer && closeCommentBtn) {
             commentBtn.addEventListener('click', () => {
                 if (codeDrawer) codeDrawer.classList.remove('open'); 
@@ -62,7 +58,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 const commentText = commentInput.value.trim();
                 if (commentText === "") return;
 
-                // BUILD ROW FEATURING DYNAMIC PROFILE PICTURE ROUTING
                 const newCommentNode = document.createElement('div');
                 newCommentNode.className = 'reel-comment-item';
                 newCommentNode.innerHTML = `
@@ -91,7 +86,6 @@ window.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // --- CODE DRAWER INTERACTION ---
         if (codeBtn && codeDrawer && closeCodeBtn) {
             codeBtn.addEventListener('click', () => {
                 if (commentDrawer) commentDrawer.classList.remove('open'); 
