@@ -603,3 +603,103 @@ body {
     color: #8e8e93;
     font-weight: 600;
 }
+/* ==========================================================================
+   12. REELS SMARTPHONE COMMENT DRAWER LAYOUT
+   ========================================================================== */
+.reel-comment-drawer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 65%; /* Covers the bottom portion of the card frame overlay */
+    background-color: #16161a;
+    border-top: 1px solid #2a2a30;
+    border-radius: 16px 16px 0 0;
+    z-index: 20;
+    display: none; /* Locked out of view by default */
+    flex-direction: column;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+/* Toggled open cleanly by JavaScript classList engine */
+.reel-comment-drawer.open {
+    display: flex !important;
+}
+
+.reel-comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.reel-comment-close {
+    background: none;
+    border: none;
+    color: #8e8e93;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.reel-comment-close:hover {
+    color: #ffffff;
+}
+
+.reel-comments-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding-right: 4px;
+}
+
+.reel-comment-item {
+    background-color: #222227;
+    border: 1px solid #2a2a30;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #e4e4e6;
+    line-height: 1.4;
+    text-align: left;
+}
+
+.reel-comment-input-row {
+    display: flex;
+    gap: 8px;
+}
+
+.reel-comment-input-row input {
+    background-color: #222227;
+    border: 1px solid #2a2a30;
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    outline: none;
+    flex: 1;
+    font-size: 13px;
+}
+
+.reel-comment-submit-btn {
+    background: none;
+    border: 1px solid #0077ff;
+    color: #0077ff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+    transition: 0.2s;
+}
+
+.reel-comment-submit-btn:hover {
+    background-color: #0077ff;
+    color: #ffffff;
+}
